@@ -1,0 +1,12 @@
+###example
+POST http://localhost:8080/projects
+Content-Type: application/json
+
+{
+  "projectId": 1,
+  "name": "jjj",
+  "status": "ACTIVE"
+}
+
+###
+GET http://localhost:8080/
