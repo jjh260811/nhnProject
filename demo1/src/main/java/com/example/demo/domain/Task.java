@@ -9,7 +9,6 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@RequiredArgsConstructor
 @Entity
 public class Task {
     @Id
@@ -34,7 +33,7 @@ public class Task {
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
 
-    @OneToMany(mappedBy = "task tag", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "TaskTag", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Tag> tags;
 
     public enum Status {

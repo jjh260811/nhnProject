@@ -11,7 +11,6 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@RequiredArgsConstructor
 @Entity
 public class Project {
     @Id

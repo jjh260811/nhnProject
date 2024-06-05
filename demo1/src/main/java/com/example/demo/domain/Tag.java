@@ -10,7 +10,6 @@ import java.util.List;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@RequiredArgsConstructor
 @Entity
 public class Tag {
     @Id
@@ -23,6 +22,6 @@ public class Tag {
     @ManyToOne(optional = false)
     private Project project;
 
-    @OneToMany(mappedBy = "task tag", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "TaskTag", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Task> tasks;
 }

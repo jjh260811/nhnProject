@@ -7,7 +7,6 @@ import lombok.*;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@RequiredArgsConstructor
 @Entity
 public class ProjectMember {
     @Id

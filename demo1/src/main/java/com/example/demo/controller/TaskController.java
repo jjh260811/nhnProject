@@ -1,13 +1,18 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.Task;
+import com.example.demo.repository.TaskRepository;
+import com.example.demo.service.TaskService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(value = "projects/{ProjectId}/Tasks")
 public class TaskController {
+    private final TaskService taskService;
 
     @GetMapping
     public List<Task> getTasks(@PathVariable Long ProjectId) {
