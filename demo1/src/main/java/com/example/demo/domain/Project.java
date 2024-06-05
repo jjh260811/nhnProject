@@ -11,7 +11,6 @@ import java.util.Set;
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@RequiredArgsConstructor
 @Entity
 public class Project {
     @Id
@@ -37,7 +36,5 @@ public class Project {
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProjectMember> projectMembers;
 
-    public enum Status {
-        ACTIVE, DORMANT, ENDED
-    }
+
 }

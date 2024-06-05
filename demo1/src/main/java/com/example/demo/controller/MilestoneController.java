@@ -7,11 +7,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "milestones")
+@RequestMapping(value = "/milestones")
 public class MilestoneController {
 
     @GetMapping
     public List<Milestone> getAllMilestones() {
+
         return null;
     }
 

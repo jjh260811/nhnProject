@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "projects/{ProjectId}/Tasks/{taskId}/Comments")
+@RequestMapping(value = "/projects/{ProjectId}/Tasks/{taskId}/Comments")
 public class CommentController {
 
     @GetMapping
