@@ -2,18 +2,13 @@ package com.example.demo.controller;
 
 
 import com.example.demo.domain.Comment;
-import com.example.demo.repository.CommentRepository;
-import com.example.demo.service.CommentService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping(value = "projects/{ProjectId}/Tasks/{taskId}/Comments")
 public class CommentController {
-    private final CommentService commentService;
 
     @GetMapping
     public List<Comment> getComments(@PathVariable Long ProjectId, @PathVariable Long taskId) {
