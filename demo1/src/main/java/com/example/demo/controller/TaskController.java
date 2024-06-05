@@ -1,16 +1,22 @@
 package com.example.demo.controller;
 
 import com.example.demo.domain.Task;
+import com.example.demo.service.TaskService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
+@RequiredArgsConstructor
 @RequestMapping(value = "/projects/{ProjectId}/Tasks")
 public class TaskController {
+    private final TaskService taskService;
 
     @GetMapping
     public List<Task> getTasks(@PathVariable Long ProjectId) {
+
         return null;
     }
 
@@ -29,7 +35,7 @@ public class TaskController {
 
     }
 
-    @DeleteMapping("{/taskId}")
+    @DeleteMapping("/{taskId}")
     public void deleteTask(@PathVariable Long ProjectId, @PathVariable Long taskId) {
 
     }

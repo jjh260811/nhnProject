@@ -2,13 +2,18 @@ package com.example.demo.controller;
 
 
 import com.example.demo.domain.Milestone;
+import com.example.demo.service.MilestoneService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
+@RequiredArgsConstructor
 @RequestMapping(value = "/milestones")
 public class MilestoneController {
+    private final MilestoneService milestoneService;
 
     @GetMapping
     public List<Milestone> getAllMilestones() {

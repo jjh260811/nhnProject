@@ -22,6 +22,6 @@ public class Tag {
     @ManyToOne(optional = false)
     private Project project;
 
-    @OneToMany(mappedBy = "task tag", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Task> tasks;
+//    @OneToMany(mappedBy = "tag", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Task> tasks;
 }

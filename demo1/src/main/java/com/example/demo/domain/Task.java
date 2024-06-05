@@ -33,8 +33,8 @@ public class Task {
     @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> comments;
 
-    @OneToMany(mappedBy = "task tag", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Tag> tags;
+//    @OneToMany(mappedBy = "taskTag", cascade = CascadeType.ALL, orphanRemoval = true)
+//    private List<Tag> tags;
 
     public enum Status {
         TODO, IN_PROGRESS, DONE

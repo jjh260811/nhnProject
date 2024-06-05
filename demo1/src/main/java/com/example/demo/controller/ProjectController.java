@@ -2,11 +2,12 @@ package com.example.demo.controller;
 
 import com.example.demo.domain.Project;
 import com.example.demo.repository.ProjectRepository;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequestMapping(value = "/projects")
 public class ProjectController {
 
