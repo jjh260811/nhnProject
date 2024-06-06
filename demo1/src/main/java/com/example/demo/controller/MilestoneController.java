@@ -17,9 +17,9 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(value = "/projects/{projectId}/milestones")
 public class MilestoneController {
-    private final MilestoneService milestoneService;
     private final MilestoneRepository milestoneRepository;
     private final ProjectRepository projectRepository;
+
 
     @GetMapping
     public ModelAndView getAllMilestones(@PathVariable Long projectId) {

@@ -1,4 +1,4 @@
-insert into `Project` (`project_name`, `project_status`)
+insert into `project` (`project_name`, `project_status`)
 values ('projectTest1', 'active'),
        ('projectTest2', 'dormant'),
        ('projectTest3', 'active'),
