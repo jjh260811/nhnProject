@@ -92,15 +92,13 @@
             <th>만기일</th>
         </tr>
         </thead>
+
         <tbody>
-        <tr>
+        <tr th:each="project : ${projects}">
             <td><input type="checkbox"></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
+            <td th:text="${project.getProjectId()}"></td>
+            <td th:text="${project.getProjectName()}"></td>
         </tr>
-        <!-- 필요한 만큼의 행 추가 -->
         </tbody>
     </table>
     <div class="pagination">

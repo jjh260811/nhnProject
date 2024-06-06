@@ -20,7 +20,7 @@ public class ProjectController {
 
     @GetMapping
     public ModelAndView getAllProjects() {
-        ModelAndView modelAndView = new ModelAndView("projects");
+        ModelAndView modelAndView = new ModelAndView("projectList");
         List<Project> projects = projectRepository.findAll();
         modelAndView.addObject("projects", projects);
 
