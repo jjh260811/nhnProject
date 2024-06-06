@@ -8,7 +8,6 @@ import com.example.demo.repository.ProjectRepository;
 import com.example.demo.request.CreateMilestoneRequest;
 import com.example.demo.service.MilestoneService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,9 +21,10 @@ public class MilestoneController {
     private final ProjectRepository projectRepository;
 
     @GetMapping
-    public List<Milestone> getAllMilestones() {
-
-        return null;
+    public List<Milestone> getAllMilestones(@RequestParam(required = false) Integer page,
+                                            @RequestParam(required = false) Integer size,
+                                            @RequestParam(required = false) Integer sort ) {
+        return milestoneRepository.findAll();
     }
 
     @GetMapping("/{milestoneId}")
@@ -37,7 +37,7 @@ public class MilestoneController {
                 Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid project ID"));
 
-        Milestone milestone = new Milestone(createMilestoneRequest.getMilestoneName(),createMilestoneRequest.getMilestoneProgress(), project);
+        Milestone milestone = new Milestone(createMilestoneRequest.milestoneName(),createMilestoneRequest.milestoneProgress(), project);
         return milestoneRepository.save(milestone);
     }
 

@@ -18,7 +18,11 @@ public class Tag {
     private String tagName;
 
     @ManyToOne
-    @NotNull
     private Project project;
+
+    public Tag(String tagName, Project project) {
+        this.tagName = tagName;
+        this.project = project;
+    }
 
 }

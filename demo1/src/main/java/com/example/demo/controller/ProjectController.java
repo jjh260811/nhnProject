@@ -19,7 +19,9 @@ public class ProjectController {
     }
 
     @GetMapping
-    public List<Project> getAllProjects() {
+    public List<Project> getAllProjects(@RequestParam(required = false) Integer page,
+                                        @RequestParam(required = false) Integer size,
+                                        @RequestParam(required = false) Integer sort ) {
         return projectRepository.findAll();
     }
 

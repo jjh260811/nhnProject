@@ -2,6 +2,11 @@ package com.example.demo.controller;
 
 
 import com.example.demo.entity.Comment;
+import com.example.demo.entity.Task;
+import com.example.demo.repository.CommentRepository;
+import com.example.demo.repository.TaskRepository;
+import com.example.demo.request.CreateCommentRequest;
+import com.example.demo.request.UpdateCommentRequest;
 import com.example.demo.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -11,33 +16,55 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/projects/{ProjectId}/Tasks/{taskId}/Comments")
+@RequestMapping(value = "/projects/{projectId}/tasks/{taskId}/comments")
 public class CommentController {
-    private final CommentService commentService;
+    private final CommentRepository commentRepository;
+    private final TaskRepository taskRepository;
 
     @GetMapping
-    public List<Comment> getComments(@PathVariable Long ProjectId, @PathVariable Long taskId) {
-        return null;
+    public List<Comment> getComments(@RequestParam(required = false) Integer page,
+                                     @RequestParam(required = false) Integer size,
+                                     @RequestParam(required = false) Integer sort,
+                                     @PathVariable Long projectId, @PathVariable Long taskId) {
+        return commentRepository.findAll();
     }
 
     @GetMapping("/{commentId}")
-    public Comment getComment(@PathVariable Long ProjectId, @PathVariable Long taskId, @PathVariable Long commentId) {
-        return null;
+    public Comment getComment(@PathVariable Long projectId, @PathVariable Long taskId, @PathVariable Long commentId) {
+        return commentRepository.findById(commentId).orElse(null);
     }
 
     @PostMapping
-    public void addComment(@RequestBody Comment comment, @PathVariable Long ProjectId, @PathVariable Long taskId) {
+    public Comment createComment(@RequestBody CreateCommentRequest createCommentRequest, @PathVariable Long projectId, @PathVariable Long taskId) {
+        Task task = null;
+        if(taskId != null){
+            task = taskRepository.findById(taskId)
+                    .orElse(null);
+        }
+        Comment comment = new Comment(
+                createCommentRequest.commentContent(),
+                task
+        );
 
+        return commentRepository.save(comment);
     }
 
-    @PutMapping
-    public void updateComment(@RequestBody Comment comment, @PathVariable Long ProjectId, @PathVariable Long taskId) {
+    @PutMapping("/{commentId}")
+    public void updateComment(@RequestBody UpdateCommentRequest updateCommentRequest, @PathVariable Long projectId, @PathVariable Long taskId, @PathVariable Long commentId) {
+        Task task = null;
+        if(taskId != null){
+            task = taskRepository.findById(taskId)
+                    .orElse(null);
+        }
 
+        commentRepository.updateByCommentId(commentId, updateCommentRequest.commentContent(), task);
     }
 
     @DeleteMapping("/{commentId}")
-    public void deleteComment(@PathVariable Long ProjectId, @PathVariable Long taskId, @PathVariable Long commentId) {
-
+    public void deleteComment(@PathVariable Long projectId, @PathVariable Long taskId, @PathVariable Long commentId) {
+        if(commentRepository.existsById(commentId)){
+            commentRepository.deleteById(commentId);
+        }
     }
 
 
