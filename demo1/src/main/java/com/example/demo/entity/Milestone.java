@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.time.ZonedDateTime;
 import java.util.List;
 
 @Getter
@@ -20,6 +21,12 @@ public class Milestone {
 
     @NotNull
     private Integer milestoneProgress;
+
+
+    private ZonedDateTime milestoneStartDate;
+
+
+    private ZonedDateTime milestoneEndDate;
 
     @ManyToOne(optional = false)
     private Project project;

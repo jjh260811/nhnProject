@@ -8,6 +8,7 @@ import com.example.demo.repository.ProjectRepository;
 import com.example.demo.request.CreateMilestoneRequest;
 import com.example.demo.service.MilestoneService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,15 +22,17 @@ public class MilestoneController {
     private final ProjectRepository projectRepository;
 
     @GetMapping
-    public List<Milestone> getAllMilestones(@RequestParam(required = false) Integer page,
-                                            @RequestParam(required = false) Integer size,
-                                            @RequestParam(required = false) Integer sort ) {
-        return milestoneRepository.findAll();
+    public ModelAndView getAllMilestones(@PathVariable Long projectId) {
+        ModelAndView modelAndView = new ModelAndView("milestone");
+        modelAndView.addObject("milestones", milestoneRepository.findAllByProjectProjectId(projectId));
+        return modelAndView;
     }
 
     @GetMapping("/{milestoneId}")
-    public Milestone getMilestone(@PathVariable("projectId") String projectId, @PathVariable Long milestoneId) {
-        return milestoneRepository.findById(milestoneId).orElse(null);
+    public ModelAndView getMilestone(@PathVariable("projectId") String projectId, @PathVariable Long milestoneId) {
+        ModelAndView modelAndView = new ModelAndView("milestoneId");
+        modelAndView.addObject("milestone", milestoneRepository.findById(milestoneId).orElse(null));
+        return modelAndView;
     }
 
     @PostMapping
@@ -37,8 +40,11 @@ public class MilestoneController {
                 Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid project ID"));
 
-        Milestone milestone = new Milestone(createMilestoneRequest.milestoneName(),createMilestoneRequest.milestoneProgress(), project);
-        return milestoneRepository.save(milestone);
+        Milestone milestone = new Milestone(createMilestoneRequest.getMilestoneName(),createMilestoneRequest.getMilestoneProgress(), project);
+        milestoneRepository.save(milestone);
+        milestoneRepository.flush();
+
+        return milestone;
     }
 
     @PutMapping
@@ -46,8 +52,10 @@ public class MilestoneController {
 
     }
 
-    @DeleteMapping
-    public void deleteMilestone(@PathVariable("projectId") Long projectId, @RequestBody Milestone milestone) {
+    @DeleteMapping("/{milestoneId}")
+    public void deleteMilestone(@PathVariable("projectId") Long projectId,@PathVariable Long milestoneId) {
+        milestoneRepository.deleteAllByProjectProjectIdAndMilestoneId(projectId,milestoneId);
+        milestoneRepository.flush();
         
     }
 }

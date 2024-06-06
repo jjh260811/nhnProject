@@ -3,8 +3,8 @@ package com.example.demo.controller;
 import com.example.demo.entity.Project;
 import com.example.demo.repository.ProjectRepository;
 import com.example.demo.request.CreateProjectRequest;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -19,37 +19,38 @@ public class ProjectController {
     }
 
     @GetMapping
-    public List<Project> getAllProjects(@RequestParam(required = false) Integer page,
-                                        @RequestParam(required = false) Integer size,
-                                        @RequestParam(required = false) Integer sort ) {
-        return projectRepository.findAll();
+    public ModelAndView getAllProjects() {
+        ModelAndView modelAndView = new ModelAndView("projects");
+        List<Project> projects = projectRepository.findAll();
+        modelAndView.addObject("projects", projects);
+
+        return modelAndView;
     }
 
     @GetMapping("/{projectId}")
-    public Project getProject(@PathVariable Long projectId) {
-
+    public ModelAndView getProject(@PathVariable Long projectId) {
+        ModelAndView modelAndView = new ModelAndView("project");
         Project project =projectRepository.findById(projectId).orElse(null);
         if(project == null){
             throw new RuntimeException();
         }
+        modelAndView.addObject("project", project);
 
-        return project;
+        return modelAndView;
     }
 
     @PostMapping
     public Project createProject(@RequestBody Project project) {
-        return projectRepository.save(project);
+         projectRepository.save(project);
+         projectRepository.flush();
+        return project;
 
     }
 
-    @PutMapping
-    public void updateProject(@RequestBody Project project) {
-        Project project2 = projectRepository.findById(project.getProjectId()).orElse(null);
-        if(project2 == null){
-            throw new RuntimeException();
-        }
-        projectRepository.delete(project2);
-        projectRepository.save(project2);
+    @PutMapping("/{projectId}")
+    public void updateProject(@PathVariable Long projectId,@RequestBody CreateProjectRequest project) {
+        projectRepository.updateProjectByProjectId(projectId, project.projectName(), project.projectStatus());
+
     }
 
     @DeleteMapping("/{projectId}")

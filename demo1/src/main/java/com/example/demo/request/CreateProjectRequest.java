@@ -6,5 +6,8 @@ import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
 import lombok.Value;
 
+
 public record CreateProjectRequest(@NotNull String projectName,
-                                   @Enumerated(EnumType.STRING) @NotNull Project.ProjectStatus projectStatus) { }
+                                   @Enumerated(EnumType.STRING) @NotNull Project.ProjectStatus projectStatus) {
+
+}
