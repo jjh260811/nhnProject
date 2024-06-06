@@ -23,6 +23,6 @@ public class Milestone {
     @ManyToOne
     private Project project;
 
-    @OneToMany(mappedBy = "milestone", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "milestone")
     private List<Task> tasks;
 }

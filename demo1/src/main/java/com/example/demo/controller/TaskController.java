@@ -29,7 +29,7 @@ public class TaskController {
 
     }
 
-    @DeleteMapping("{/taskId}")
+    @DeleteMapping("/{taskId}")
     public void deleteTask(@PathVariable Long ProjectId, @PathVariable Long taskId) {
 
     }

@@ -11,4 +11,6 @@ public class TaskTag {
 
     @EmbeddedId
     TaskTagPk taskTagPk;
+
+
 }
