@@ -8,8 +8,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
@@ -34,9 +32,9 @@ public class Task {
     public Task(String taskName, String taskDescription, TaskStatus taskStatus, Project project, Milestone milestone) {
         this.taskName = taskName;
         this.taskDescription = taskDescription;
+        this.taskStatus = taskStatus;
         this.project = project;
         this.milestone = milestone;
-        this.taskStatus = taskStatus;
     }
 
     @Id
@@ -57,7 +55,6 @@ public class Task {
     private Project project;
 
     @ManyToOne
-    @NotNull
     private Milestone milestone;
 
 //    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)

@@ -7,7 +7,9 @@ import com.example.demo.repository.MilestoneRepository;
 import com.example.demo.repository.ProjectRepository;
 import com.example.demo.repository.TaskRepository;
 import com.example.demo.request.CreateTaskRequest;
+import com.example.demo.request.UpdateTaskRequest;
 import com.example.demo.service.TaskServiceImpl;
+import jakarta.validation.constraints.Null;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,30 +19,36 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping(value = "/projects/{projectId}/tasks")
 public class TaskController {
-    private final TaskServiceImpl taskServiceImpl;
     private final ProjectRepository projectRepository;
     private final MilestoneRepository milestoneRepository;
     private final TaskRepository taskRepository;
 
     @GetMapping
-    public List<Task> getTasks(@PathVariable Long projectId) {
-        return null;
+    public List<Task> getTasks(@RequestParam(required = false) Integer page,
+                               @RequestParam(required = false) Integer size,
+                               @RequestParam(required = false) Integer sort,
+                               @PathVariable Long projectId) {
+
+        return taskRepository.findAllByProjectProjectId(projectId);
     }
 
     @GetMapping("/{taskId}")
     public Task getTask(@PathVariable Long projectId, @PathVariable Long taskId) {
-        return taskServiceImpl.getById(projectId);
+        return taskRepository.findByProjectProjectIdAndTaskId(projectId, taskId);
     }
 
     @PostMapping
     public Task createTask(@RequestBody CreateTaskRequest createTaskRequest, @PathVariable("projectId") Long projectId) {
 
-//        Project project = projectRepository.findById(projectId)
-//                .orElseThrow(() -> new IllegalArgumentException("Invalid project ID"));
-        Milestone milestone = milestoneRepository.findById(createTaskRequest.milestoneId())
-                .orElseThrow(() -> new IllegalArgumentException("Invalid milestone ID"));
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid project ID"));
 
-        Project project = projectRepository.save(new Project("testName", Project.ProjectStatus.ACTIVE));
+        Milestone milestone = null;
+        if (createTaskRequest.milestoneId() != null) {
+            milestone = milestoneRepository.findById(createTaskRequest.milestoneId())
+                    .orElse(null);
+        }
+
         // Task 객체 생성
         Task task = new Task(
                 createTaskRequest.taskName(),
@@ -53,14 +61,23 @@ public class TaskController {
         return taskRepository.save(task);
     }
 
-    @PutMapping
-    public Task updateTask(@RequestBody Task task, @PathVariable("projectId") Long projectId) {
-        return null;
+    @PutMapping("/{taskId}")
+    public void updateTask(@RequestBody UpdateTaskRequest updateTaskRequest, @PathVariable("projectId") Long projectId, @PathVariable Long taskId) {
+
+        Milestone milestone = null;
+        if (updateTaskRequest.milestoneId() != null) {
+            milestone = milestoneRepository.findById(updateTaskRequest.milestoneId())
+                    .orElse(null);
+        }
+
+        taskRepository.updateByTaskId(taskId, updateTaskRequest.taskName(), updateTaskRequest.taskDescription(), Task.TaskStatus.jsonCreator(String.valueOf(updateTaskRequest.taskStatus())), milestone);
     }
 
     @DeleteMapping("/{taskId}")
-    public Task deleteTask(@PathVariable Long projectId, @PathVariable Long taskId) {
-        return null;
+    public void deleteTask(@PathVariable Long projectId, @PathVariable Long taskId) {
+        if (taskRepository.existsById(taskId)) {
+            taskRepository.deleteById(taskId);
+        }
     }
 
 }
