@@ -1,0 +1,55 @@
+###example
+POST http://localhost:8080/projects
+Content-Type: application/json
+
+{
+  "projectName": "projectTest",
+  "projectStatus": "ACTIVE"
+}
+
+###example
+POST http://localhost:8080/projects/1/milestones
+Content-Type: application/json
+
+{
+  "milestoneName": "6월1주차",
+  "milestoneProgress": 0
+}
+
+###example
+GET http://localhost:8080/projects
+
+###example
+GET http://localhost:8080/projects/1/milestones
+
+###example
+POST http://localhost:8080/projects/1/tasks
+Content-Type: application/json
+
+{
+  "taskName": "jjj",
+  "taskDescription": "asdf",
+  "taskStatus": "DONE",
+  "project": {
+    "projectId": 1,
+    "projectName": "test",
+    "projectStatus": "ACTIVE"
+  },
+  "milestone": {
+    "milestoneId": 1,
+    "milestoneName": "testMilestone",
+    "milestoneProgress": 0
+  }
+}
+
+###
+GET http://localhost:8080/
+
+###example
+POST http://localhost:8080/projects
+Content-Type: application/json
+
+{
+  "projectName": "jjj",
+  "projectStatus": "ACTIVE"
+}

@@ -1,13 +1,15 @@
 package com.example.demo.controller;
 
-import com.example.demo.domain.Project;
+import com.example.demo.entity.Project;
 import com.example.demo.repository.ProjectRepository;
+import com.example.demo.request.CreateProjectRequest;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/projects")
+@RequestMapping("/projects")
 public class ProjectController {
 
     private final ProjectRepository projectRepository;
@@ -33,8 +35,8 @@ public class ProjectController {
     }
 
     @PostMapping
-    public void createProject(@RequestBody Project project) {
-        projectRepository.save(project);
+    public Project createProject(@RequestBody Project project) {
+        return projectRepository.save(project);
 
     }
 
