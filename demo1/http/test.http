@@ -6,9 +6,11 @@ Content-Type: application/json
   "projectName": "projectTest",
   "projectStatus": "ACTIVE"
 }
+###example
+GET  localhost:8080/projects/1/milestones/1
 
 ###example
-POST http://localhost:8080/projects/1/milestones
+POST http://localhost:8080/projects/2/milestones
 Content-Type: application/json
 
 {
@@ -53,3 +55,15 @@ Content-Type: application/json
   "projectName": "jjj",
   "projectStatus": "ACTIVE"
 }
+
+###
+PUT localhost:8080/projects/1
+Content-Type: application/json
+
+{
+  "projectName": "hihi",
+  "projectStatus": "ENDED"
+}
+
+###
+DELETE localhost:8080/projects/1/milestones/1
