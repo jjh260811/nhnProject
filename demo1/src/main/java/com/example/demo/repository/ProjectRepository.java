@@ -9,9 +9,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.beans.Transient;
+import java.util.List;
 
 public interface ProjectRepository extends JpaRepository<Project, Long> {
-
     @Modifying(clearAutomatically = true)
     @Transactional
     @Query("update Project p set p.projectName = :projectName, p.projectStatus = :projectStatus where p.projectId = :projectId")

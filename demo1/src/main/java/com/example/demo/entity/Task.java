@@ -54,7 +54,7 @@ public class Task {
     @NotNull
     private Project project;
 
-    @ManyToOne
+    @OneToOne
     private Milestone milestone;
 
 //    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)

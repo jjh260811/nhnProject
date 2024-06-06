@@ -61,8 +61,9 @@ public class Project {
 //    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
 //    private List<Tag> tags = new ArrayList<>();
 //
-//    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<ProjectMember> projectMembers = new ArrayList<>();
+    @JsonManagedReference
+    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Member> projectMembers = new ArrayList<>();
 
     public Project(String projectName, ProjectStatus projectStatus, String projectStartDate, String projectEndDate){
         this.projectName = projectName;

@@ -1,22 +1,24 @@
 package com.example.demo.controller;
 
+import com.example.demo.entity.Member;
+import com.example.demo.entity.MemberPk;
 import com.example.demo.entity.Project;
+import com.example.demo.repository.MemberRepository;
 import com.example.demo.repository.ProjectRepository;
 import com.example.demo.request.CreateProjectRequest;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/projects")
+@RequiredArgsConstructor
+@RequestMapping("/users/{userId}/projects")
 public class ProjectController {
 
     private final ProjectRepository projectRepository;
-
-    public ProjectController(ProjectRepository projectRepository) {
-        this.projectRepository = projectRepository;
-    }
+    private final MemberRepository memberRepository;
 
     @GetMapping
     public ModelAndView getAllProjects() {
@@ -40,10 +42,12 @@ public class ProjectController {
     }
 
     @PostMapping
-    public Project createProject(@RequestBody Project project) {
+    public Project createProject(@RequestBody Project project, @PathVariable Long userId) {
          projectRepository.save(project);
          projectRepository.flush();
-        return project;
+
+         memberRepository.save(new Member(new MemberPk(userId, project.getProjectId()), project, Member.MemberRole.ADMIN));
+         return project;
 
     }
 

@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.entity.Member;
 import com.example.demo.repository.MemberRepository;
+import com.example.demo.request.ProjectDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,6 +16,11 @@ public class MemberController {
     @GetMapping
     public List<Member> getMembers(@PathVariable("projectId") Long projectId) {
         return memberRepository.findByProjectProjectId(projectId);
+    }
+
+    @GetMapping("/{memberId}")
+    public Member getMember(@PathVariable("projectId") Long projectId, @PathVariable Long memberId){
+        return memberRepository.findById(memberId).orElse(null);
     }
 
     @PostMapping

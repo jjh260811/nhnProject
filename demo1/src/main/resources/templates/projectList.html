@@ -98,8 +98,22 @@
             <td><input type="checkbox"></td>
             <td th:text="${project.getProjectId()}"></td>
             <td th:text="${project.getProjectName()}"></td>
+            <td th:if="${project.getProjectId()} == ${member.getId()}"></td>
+
+
         </tr>
         </tbody>
+
+<!--        <tbody>-->
+<!--        <tr>-->
+<!--            <td><input type="checkbox"></td>-->
+<!--            <td></td>-->
+<!--            <td></td>-->
+<!--            <td></td>-->
+<!--            <td></td>-->
+<!--        </tr>-->
+<!--        &lt;!&ndash; 필요한 만큼의 행 추가 &ndash;&gt;-->
+<!--        </tbody>-->
     </table>
     <div class="pagination">
         <div>

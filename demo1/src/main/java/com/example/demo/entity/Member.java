@@ -1,6 +1,8 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -28,6 +30,7 @@ public class Member {
     @EmbeddedId
     private MemberPk memberPk;
 
+    @JsonBackReference
     @ManyToOne(optional = false)
     @MapsId("projectId")
     private Project project;
