@@ -1,7 +1,11 @@
 package com.example.demo.controller;
 
 
-import com.example.demo.domain.Milestone;
+import com.example.demo.entity.Milestone;
+import com.example.demo.entity.Project;
+import com.example.demo.repository.MilestoneRepository;
+import com.example.demo.repository.ProjectRepository;
+import com.example.demo.request.CreateMilestoneRequest;
 import com.example.demo.service.MilestoneService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -9,11 +13,13 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/milestones")
+@RequestMapping(value = "/projects/{projectId}/milestones")
 public class MilestoneController {
     private final MilestoneService milestoneService;
+    private final MilestoneRepository milestoneRepository;
+    private final ProjectRepository projectRepository;
 
     @GetMapping
     public List<Milestone> getAllMilestones() {
@@ -22,22 +28,26 @@ public class MilestoneController {
     }
 
     @GetMapping("/{milestoneId}")
-    public Milestone getMilestone(@PathVariable Long milestoneId) {
-        return null;
+    public Milestone getMilestone(@PathVariable("projectId") String projectId, @PathVariable Long milestoneId) {
+        return milestoneRepository.findById(milestoneId).orElse(null);
     }
 
     @PostMapping
-    public void createMilestone(@RequestBody Milestone milestone) {
+    public Milestone createMilestone(@RequestBody CreateMilestoneRequest createMilestoneRequest, @PathVariable("projectId") Long projectId) {
+                Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid project ID"));
 
+        Milestone milestone = new Milestone(createMilestoneRequest.getMilestoneName(),createMilestoneRequest.getMilestoneProgress(), project);
+        return milestoneRepository.save(milestone);
     }
 
     @PutMapping
-    public void updateMilestone(@RequestBody Milestone milestone) {
+    public void updateMilestone(@PathVariable("projectId") Long projectId, @RequestBody Milestone milestone) {
 
     }
 
     @DeleteMapping
-    public void deleteMilestone(@RequestBody Milestone milestone) {
+    public void deleteMilestone(@PathVariable("projectId") Long projectId, @RequestBody Milestone milestone) {
         
     }
 }

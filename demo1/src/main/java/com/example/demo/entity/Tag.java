@@ -1,4 +1,5 @@
-package com.example.demo.domain;
+package com.example.demo.entity;
+
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -8,19 +9,16 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Entity
-public class ProjectMember {
+public class Tag {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long memberId;
-
-    @ManyToOne(optional = false)
-    private Project project;
+    private Long tagId;
 
     @NotNull
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    private String tagName;
 
-    public enum Role {
-        ADMIN, MEMBER
-    }
+    @ManyToOne
+    @NotNull
+    private Project project;
+
 }

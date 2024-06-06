@@ -1,27 +1,21 @@
-package com.example.demo.domain;
-
+package com.example.demo.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.util.List;
-
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Entity
-public class Tag {
+public class Comment {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long tagId;
+    private Long commentId;
 
     @NotNull
-    private String name;
+    private String commentContent;
 
     @ManyToOne(optional = false)
-    private Project project;
-
-//    @OneToMany(mappedBy = "tag", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Task> tasks;
+    private Task task;
 }
