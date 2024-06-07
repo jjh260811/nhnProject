@@ -6,8 +6,13 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
+import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.FormatStyle;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -43,7 +48,9 @@ public class Project {
     @Setter
     private ProjectStatus projectStatus;
 
+    private ZonedDateTime projectStartDate;
 
+    private ZonedDateTime projectEndDate;
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Milestone> milestones= new ArrayList<>();
@@ -57,8 +64,16 @@ public class Project {
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProjectMember> projectMembers = new ArrayList<>();
 
-    public Project(String projectName, ProjectStatus projectStatus){
+    public Project(String projectName, ProjectStatus projectStatus, String projectStartDate, String projectEndDate){
         this.projectName = projectName;
         this.projectStatus = projectStatus;
+        this.projectStartDate = ZonedDateTime.parse(projectStartDate, DateTimeFormatter.ISO_ZONED_DATE_TIME);
+        this.projectEndDate = ZonedDateTime.parse(projectEndDate,DateTimeFormatter.ISO_ZONED_DATE_TIME);
+    }
+    public String getStartDateToString(){
+        return projectStartDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd/ HH:mm"));
+    }
+    public String getEndDateToString(){
+        return projectEndDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd/ HH:mm"));
     }
 }

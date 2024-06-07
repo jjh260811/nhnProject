@@ -8,8 +8,8 @@ import com.example.demo.repository.ProjectRepository;
 import com.example.demo.request.CreateMilestoneRequest;
 import com.example.demo.service.MilestoneService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -40,22 +40,29 @@ public class MilestoneController {
                 Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new IllegalArgumentException("Invalid project ID"));
 
-        Milestone milestone = new Milestone(createMilestoneRequest.getMilestoneName(),createMilestoneRequest.getMilestoneProgress(), project);
+        Milestone milestone = new Milestone(createMilestoneRequest.milestoneName(),createMilestoneRequest.milestoneProgress(), project);
         milestoneRepository.save(milestone);
         milestoneRepository.flush();
 
         return milestone;
     }
 
-    @PutMapping
-    public void updateMilestone(@PathVariable("projectId") Long projectId, @RequestBody Milestone milestone) {
+    @PutMapping("/{milestoneId}")
+    public void updateMilestone(@PathVariable("projectId") Long projectId,@PathVariable("milestoneId") Long milestoneId, @RequestBody CreateMilestoneRequest milestone) {
+        milestoneRepository.updateProjectByProjectId(projectId,milestoneId,milestone.milestoneName(),milestone.milestoneProgress(),milestone.milestoneStartDate(),milestone.milestoneEndDate());
 
     }
 
     @DeleteMapping("/{milestoneId}")
     public void deleteMilestone(@PathVariable("projectId") Long projectId,@PathVariable Long milestoneId) {
-        milestoneRepository.deleteAllByProjectProjectIdAndMilestoneId(projectId,milestoneId);
-        milestoneRepository.flush();
+        if(milestoneRepository.existsById(milestoneId)) {
+            milestoneRepository.deleteById(milestoneId);
+            milestoneRepository.flush();
+        }
+        else{
+            throw new IllegalArgumentException("Invalid milestone ID");
+        }
+
         
     }
 }
