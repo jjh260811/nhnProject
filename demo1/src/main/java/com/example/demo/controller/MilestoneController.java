@@ -15,10 +15,18 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "/projects/{projectId}/milestones")
+@RequestMapping(value = "users/{userId}/projects/{projectId}/milestones")
 public class MilestoneController {
     private final MilestoneRepository milestoneRepository;
     private final ProjectRepository projectRepository;
+
+    @GetMapping("/add")
+    public ModelAndView addMilestone(@PathVariable("projectId") Long projectId) {
+        ModelAndView modelAndView = new ModelAndView("milestonePropertyAdd");
+        modelAndView.addObject("projectId", projectId);
+        modelAndView.addObject("milestones", milestoneRepository.findAll());
+        return modelAndView;
+    }
 
 
     @GetMapping
