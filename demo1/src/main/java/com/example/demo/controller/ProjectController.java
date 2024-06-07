@@ -20,10 +20,11 @@ public class ProjectController {
     private final MemberRepository memberRepository;
 
     @GetMapping
-    public ModelAndView getAllProjects() {
+    public ModelAndView getAllProjects(@PathVariable Long userId) {
         ModelAndView modelAndView = new ModelAndView("projectList");
         List<Project> projects = projectRepository.findAll();
         modelAndView.addObject("projects", projects);
+        modelAndView.addObject("user", userId);
 
         return modelAndView;
     }
