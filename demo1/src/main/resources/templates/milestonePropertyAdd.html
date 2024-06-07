@@ -71,31 +71,31 @@
 <body>
 <div class="container">
     <div class="header">단계 추가</div>
-    <div class="input-group">
-        <label for="milestone-name">단계명</label>
-        <input type="text" id="milestone-name" placeholder="예) 6월 1주 배포">
-    </div>
-    <div class="input-group">
-        <label>기간</label>
-        <div class="radio-group">
-            <input type="radio" id="no-period" name="period" value="none">
-            <label for="no-period">없음</label>
-            <input type="radio" id="has-period" name="period" value="has" checked>
-            <label for="has-period">있음</label>
+    <form id="milestoneForm" th:action="@{http://localhost:8080/projects/{projectId}/milstones (projectId=${projectId})}">
+        <div class="input-group">
+            <label for="milestone-name">단계명</label>
+            <input type="text" id="milestone-name" name="milestoneName" placeholder="예) 6월 1주 배포" required>
         </div>
-    </div>
-    <div class="input-group">
+        <div class="input-group">
+            <label>기간</label>
+            <div class="radio-group">
+                <input type="radio" id="no-period" name="period" value="none">
+                <label for="no-period">없음</label>
+                <input type="radio" id="has-period" name="period" value="has" checked>
+                <label for="has-period">있음</label>
+            </div>
+        </div>
+        <div class="input-group">
             <span>
-                <input type="date" id="start-date" value="2024-06-06">
+                <input type="date" id="start-date" name="startDate" value="2024-06-06">
             </span>
-        <span>
-                <input type="date" id="end-date" value="2024-06-12">
+            <span>
+                <input type="date" id="end-date" name="endDate" value="2024-06-12">
             </span>
-    </div>
-    <div class="buttons">
-        <button>추가</button>
-        <button>취소</button>
-    </div>
+        </div>
+        <div class="buttons">
+            <button type="submit">추가</button>
+            <button type="button" id="cancelButton">취소</button>
+        </div>
+    </form>
 </div>
-</body>
-</html>
