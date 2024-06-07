@@ -17,6 +17,7 @@
             justify-content: space-between;
             align-items: center;
         }
+
         .header h1 {
             margin: 0;
         }
@@ -30,7 +31,7 @@
             padding: 5px;
         }
         table {
-            width: 100%;
+            width: 90%;
             border-collapse: collapse;
             margin-top: 10px;
         }
@@ -69,10 +70,14 @@
             <option>유형: 전체</option>
         </select>
         <select>
-            <option>개인 상태: 대기, 할 일, 진행 중</option>
+            <option value="ALL" selected>전체</option>
+            <option value="ACTIVE">진행중</option>
+            <option value="DORMANT">대기</option>
+            <option value="ENDED">종료</option>
+
         </select>
         <select>
-            <option>담당자: 임채령</option>
+            <option>담당자: <span th:text="${userId}"></span></option>
         </select>
         <select>
             <option>태그: 전체</option>
@@ -97,23 +102,16 @@
         <tr th:each="project : ${projects}">
             <td><input type="checkbox"></td>
             <td th:text="${project.getProjectId()}"></td>
-            <td th:text="${project.getProjectName()}"></td>
+            <td>
+                <a th:href="@{'http://localhost:8080/users/' + ${userId} + '/projects/' + ${project.getProjectId()}}"
+                   th:text="${project.getProjectName()}"></a>
+            </td>
             <td th:text="${project.getProjectMembers()[0].getMemberPk().getMemberId()}"></td>
-
-
+            <td th:text="${project.getEndDateToString()}"></td>
         </tr>
         </tbody>
 
-<!--        <tbody>-->
-<!--        <tr>-->
-<!--            <td><input type="checkbox"></td>-->
-<!--            <td></td>-->
-<!--            <td></td>-->
-<!--            <td></td>-->
-<!--            <td></td>-->
-<!--        </tr>-->
-<!--        &lt;!&ndash; 필요한 만큼의 행 추가 &ndash;&gt;-->
-<!--        </tbody>-->
+
     </table>
     <div class="pagination">
         <div>
