@@ -16,7 +16,6 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/users/{userId}/projects")
 public class ProjectController {
-
     private final ProjectRepository projectRepository;
     private final MemberRepository memberRepository;
 

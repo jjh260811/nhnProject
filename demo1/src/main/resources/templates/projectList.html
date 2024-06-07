@@ -98,7 +98,7 @@
             <td><input type="checkbox"></td>
             <td th:text="${project.getProjectId()}"></td>
             <td th:text="${project.getProjectName()}"></td>
-            <td th:if="${project.getProjectId()} == ${member.getId()}"></td>
+            <td th:text="${project.getProjectMembers()[0].getMemberPk().getMemberId()}"></td>
 
 
         </tr>
