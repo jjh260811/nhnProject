@@ -40,10 +40,8 @@
     <div class="milestone-card">
         <h1 class="milestone-title" th:text="${milestone.milestoneName}">Milestone Title</h1>
         <p class="milestone-description" th:text="${milestone.milestoneProgress}">Milestone Description</p>
-        <div class="milestone-meta">
-            <div>
-
-            </div>
+        <p class="milestone-description" th:text="${milestone.getMilestoneStartDate()}">Milestone StartDate</p>
+        <p class="milestone-description" th:text="${milestone.getMilestoneEndDate()}">Milestone EndDate</p>
 
         </div>
     </div>

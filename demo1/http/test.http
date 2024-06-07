@@ -4,7 +4,9 @@ Content-Type: application/json
 
 {
   "projectName": "projectTest",
-  "projectStatus": "ACTIVE"
+  "projectStatus": "ACTIVE",
+  "projectStartDate": "2024-06-07T17:50:16+09:00[Asia/Seoul]",
+  "projectEndDate": "2024-06-09T17:50:16+09:00[Asia/Seoul]"
 }
 
 ###프로젝트에 마일스톤 추가
@@ -14,6 +16,7 @@ Content-Type: application/json
 {
   "milestoneName": "6월1주차",
   "milestoneProgress": 0
+
 }
 
 ###프로젝트 리스트
@@ -103,3 +106,19 @@ GET http://localhost:8080/tags/1
 
 ###태그 삭제
 DELETE http://localhost:8080/tags/1
+
+
+
+###
+PUT localhost:8080/projects/1/milestones/1
+Content-Type: application/json
+
+{
+  "milestoneName": "6월1주차",
+  "milestoneProgress": 0,
+  "milestoneStartDate": "2023-06-06T17:50:16+09:00[Asia/Seoul]",
+  "milestoneEndDate": "2023-06-09T17:50:16+09:00[Asia/Seoul]"
+}
+
+###
+DELETE localhost:8080/projects/1/milestones/1

@@ -10,13 +10,30 @@ import lombok.*;
 @AllArgsConstructor
 @Entity
 public class ProjectMember {
+    public enum ProjectMemberRole {
+        ADMIN,
+        MEMBER;
+
+        @JsonCreator
+        public static ProjectMemberRole jsonCreator(String str) {
+            for (ProjectMemberRole value : values()) {
+                if (value.name().equalsIgnoreCase(str)) {
+                    return value;
+                }
+            }
+            return MEMBER;
+        }
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long userId;
+    private String projectMemberId;
 
     @ManyToOne
     @NotNull
     private Project project;
 
+    @Enumerated(EnumType.STRING)
+    @NotNull
+    private ProjectMemberRole projectMemberRole;
 }

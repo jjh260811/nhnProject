@@ -29,7 +29,7 @@ public class ProjectController {
 
     @GetMapping("/{projectId}")
     public ModelAndView getProject(@PathVariable Long projectId) {
-        ModelAndView modelAndView = new ModelAndView("project");
+        ModelAndView modelAndView = new ModelAndView("projectDetail");
         Project project =projectRepository.findById(projectId).orElse(null);
         if(project == null){
             throw new RuntimeException();
