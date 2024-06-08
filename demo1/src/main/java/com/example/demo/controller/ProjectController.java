@@ -1,85 +1,83 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.ProjectCreateDto;
+import com.example.demo.dto.ProjectGetByUserIdRequestDto;
+import com.example.demo.dto.ProjectGetDto;
 import com.example.demo.entity.Member;
 import com.example.demo.entity.MemberPk;
 import com.example.demo.entity.Project;
 import com.example.demo.repository.MemberRepository;
 import com.example.demo.repository.ProjectRepository;
+import com.example.demo.request.CreateProjectRequest;
 import com.example.demo.request.UpdateProjectRequest;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
+import com.example.demo.response.CreateProjectResponse;
 
-import java.util.Arrays;
+import lombok.RequiredArgsConstructor;
+
+import org.springframework.web.bind.annotation.*;
+
+
 import java.util.List;
 
-@Controller
+@RestController
 @RequiredArgsConstructor
-@RequestMapping("/users/{userId}/projects")
+@RequestMapping("/projects")
 public class ProjectController {
     private final ProjectRepository projectRepository;
     private final MemberRepository memberRepository;
 
-    @GetMapping("/add")
-    public ModelAndView createProjectView(@PathVariable Long userId) {
-        ModelAndView modelAndView = new ModelAndView("projectAddView");
-        modelAndView.addObject("userId", userId);
-
-        // Project 상태 값을 모델에 추가
-        List<Project.ProjectStatus> projectStatuses = Arrays.asList(Project.ProjectStatus.values());
-        modelAndView.addObject("projectStatuses", projectStatuses);
-
-        return modelAndView;
-    }
-
     @GetMapping
-    public ModelAndView getAllProjects(@PathVariable Long userId) {
-        ModelAndView modelAndView = new ModelAndView("projectListView");
-        List<Project> projects = projectRepository.findAll();
-        modelAndView.addObject("projects", projects);
-        modelAndView.addObject("userId", userId);
-
-        return modelAndView;
+    public List<Project> getAllProjects(@RequestParam(required = false) Integer page,
+                                        @RequestParam(required = false) Integer size,
+                                        @RequestParam(required = false) Integer sort,
+                                        @RequestBody ProjectGetByUserIdRequestDto request) {
+        return projectRepository.findProjectsByUserId(request.userId());
     }
 
     @GetMapping("/{projectId}")
-    public ModelAndView getProject(@PathVariable Long userId, @PathVariable Long projectId) {
-        ModelAndView modelAndView = new ModelAndView("projectView");
+    public Project getProject(@PathVariable Long projectId) {
         Project project = projectRepository.findById(projectId).orElse(null);
 
         if(project == null){
             throw new RuntimeException();
         }
 
-        modelAndView.addObject("project", project);
-        modelAndView.addObject("userId", userId);
-
-        return modelAndView;
+        return project;
     }
 
     @PostMapping
-    public String createProject(@ModelAttribute @RequestBody Project project, @PathVariable Long userId) {
-         projectRepository.save(project);
-         projectRepository.flush();
+    public ProjectCreateDto createProject(@RequestBody ProjectCreateDto request) {
+        Project project = new Project(
+                request.name(),
+                request.status()
+        );
 
-         memberRepository.save(new Member(new MemberPk(userId, project.getProjectId()), project, Member.MemberRole.ADMIN));
-         return "redirect:/users/" + userId + "/projects/" + project.getProjectId();
+        projectRepository.save(project);
+        projectRepository.flush();
 
+        ProjectCreateDto response = ProjectCreateDto.builder()
+                .name(project.getProjectName())
+                .status(project.getProjectStatus())
+//                .memberIds(project.getMembers())
+                .build();
+
+         memberRepository.save(new Member(new MemberPk(request.adminUserId(), project.getProjectId()), project, Member.MemberRole.ADMIN));
+         return response;
     }
 
-    @PutMapping("/{projectId}")
-    public void updateProject(@PathVariable Long projectId,@RequestBody UpdateProjectRequest project) {
-        projectRepository.updateProjectByProjectId(projectId, project.projectName(), project.projectStatus());
-
-    }
-
-    @DeleteMapping("/{projectId}")
-    public void deleteProject(@PathVariable Long projectId) {
-        Project project2 = projectRepository.findById(projectId).orElse(null);
-        if(project2 == null){
-            throw new RuntimeException();
-        }
-        projectRepository.deleteById(projectId);
-    }
+//    @PutMapping("/{projectId}")
+//    public void updateProject(@PathVariable Long projectId, @RequestBody UpdateProjectRequest project) {
+//        projectRepository.updateProjectByProjectId(projectId, project.projectName(), project.projectStatus());
+//    }
+//
+//    @DeleteMapping("/{projectId}")
+//    public void deleteProject(@PathVariable Long projectId) {
+//        Project project = projectRepository.findById(projectId).orElse(null);
+//
+//        if(project == null){
+//            throw new RuntimeException();
+//        }
+//
+//        projectRepository.deleteById(projectId);
+//    }
 }

@@ -8,11 +8,8 @@ import com.example.demo.repository.ProjectRepository;
 import com.example.demo.repository.TaskRepository;
 import com.example.demo.request.CreateTaskRequest;
 import com.example.demo.request.UpdateTaskRequest;
-import com.example.demo.service.TaskServiceImpl;
-import jakarta.validation.constraints.Null;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
@@ -23,16 +20,6 @@ public class TaskController {
     private final ProjectRepository projectRepository;
     private final MilestoneRepository milestoneRepository;
     private final TaskRepository taskRepository;
-
-    @GetMapping("/add")
-    public ModelAndView addTaskView(@PathVariable Long userId, @PathVariable Long projectId) {
-        ModelAndView modelAndView = new ModelAndView("taskAddView");
-        modelAndView.addObject("userId", userId);
-        modelAndView.addObject("projectId", projectId);
-
-
-        return modelAndView;
-    }
 
     @GetMapping
     public List<Task> getTasks(@RequestParam(required = false) Integer page,

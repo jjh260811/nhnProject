@@ -22,19 +22,13 @@ public class TagController {
     private final ProjectRepository projectRepository;
 
     @GetMapping
-    public ModelAndView getTags(@RequestParam(required = false) Integer page,
+    public List<Tag> getTags(@RequestParam(required = false) Integer page,
                                 @RequestParam(required = false) Integer size,
                                 @RequestParam(required = false) Integer sort,
                                 @PathVariable Long projectId,
                                 @PathVariable Long userId){
-        List<Tag> tags = tagRepository.findByProjectProjectId(projectId);
 
-        ModelAndView modelAndView = new ModelAndView("tagAddView");
-        modelAndView.addObject("userId", userId);
-        modelAndView.addObject("projectId", projectId);
-        modelAndView.addObject("tags", tags);
-
-        return modelAndView;
+        return tagRepository.findByProjectProjectId(projectId);
     }
 
     @GetMapping("/{tagId}")
@@ -43,7 +37,7 @@ public class TagController {
     }
 
     @PostMapping
-    public String createTag(@ModelAttribute @RequestBody CreateTagRequest createTagRequest, @PathVariable Long userId, @PathVariable Long projectId){
+    public Tag createTag(@RequestBody CreateTagRequest createTagRequest, @PathVariable Long userId, @PathVariable Long projectId){
 
         Project project = null;
         if(projectId != null){
@@ -56,9 +50,7 @@ public class TagController {
                 project
         );
 
-        tagRepository.save(tag);
-
-        return "redirect:/users/" + userId + "/projects/" + project.getProjectId();
+        return tagRepository.save(tag);
     }
 
     @PutMapping("/{tagId}")
@@ -68,7 +60,6 @@ public class TagController {
             project = projectRepository.findById(projectId)
                     .orElse(null);
         }
-
         tagRepository.updateByTagId(tagId, updateTagRequest.tagName(), project);
     }
 

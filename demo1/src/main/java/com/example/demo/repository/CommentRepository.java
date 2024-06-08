@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.util.List;
+
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     @Modifying
     @Transactional
@@ -16,4 +18,6 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
     void updateByCommentId(@Param("commentId") Long commentId,
                        @Param("commentContent") String commentContent,
                        @Param("task") Task task);
+
+    List<Comment> findAllByTaskTaskId(Long taskId);
 }

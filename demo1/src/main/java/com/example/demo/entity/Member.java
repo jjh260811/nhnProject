@@ -30,11 +30,15 @@ public class Member {
     @EmbeddedId
     private MemberPk memberPk;
 
-    @JsonBackReference
     @ManyToOne(optional = false)
     @MapsId("projectId")
     private Project project;
 
     @NotNull
     private MemberRole memberRole;
+
+    public Member(MemberPk memberPk, MemberRole memberRole) {
+        this.memberPk = memberPk;
+        this.memberRole = memberRole;
+    }
 }

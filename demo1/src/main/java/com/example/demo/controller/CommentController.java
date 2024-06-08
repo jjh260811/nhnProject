@@ -7,9 +7,7 @@ import com.example.demo.repository.CommentRepository;
 import com.example.demo.repository.TaskRepository;
 import com.example.demo.request.CreateCommentRequest;
 import com.example.demo.request.UpdateCommentRequest;
-import com.example.demo.service.CommentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,7 +24,7 @@ public class CommentController {
                                      @RequestParam(required = false) Integer size,
                                      @RequestParam(required = false) Integer sort,
                                      @PathVariable Long projectId, @PathVariable Long taskId) {
-        return commentRepository.findAll();
+        return commentRepository.findAllByTaskTaskId(taskId);
     }
 
     @GetMapping("/{commentId}")
