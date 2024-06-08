@@ -7,34 +7,35 @@ import com.example.demo.repository.ProjectRepository;
 import com.example.demo.repository.TagRepository;
 import com.example.demo.request.CreateTagRequest;
 import com.example.demo.request.UpdateTagRequest;
-import com.example.demo.service.TagService;
 import lombok.RequiredArgsConstructor;
-import org.hibernate.sql.Update;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 
-@RestController
+@Controller
 @RequiredArgsConstructor
-@RequestMapping(value = "/tags")
+@RequestMapping("/users/{userId}/projects/{projectId}/tags")
 public class TagController {
     private final TagRepository tagRepository;
     private final ProjectRepository projectRepository;
 
     @GetMapping
-    public List<Tag> getTags(@RequestParam(required = false) Integer page,
-                             @RequestParam(required = false) Integer size,
-                             @RequestParam(required = false) Integer sort ){
-        return tagRepository.findAll();
-    }
+    public ModelAndView getTags(@RequestParam(required = false) Integer page,
+                                @RequestParam(required = false) Integer size,
+                                @RequestParam(required = false) Integer sort,
+                                @PathVariable Long projectId,
+                                @PathVariable Long userId){
+        List<Tag> tags = tagRepository.findByProjectProjectId(projectId);
 
-//    @GetMapping
-//    public ModelAndView getAllMilestones(@PathVariable Long projectId) {
-//        ModelAndView modelAndView = new ModelAndView("milestone");
-//        modelAndView.addObject("milestones", milestoneRepository.findAllByProjectProjectId(projectId));
-//        return modelAndView;
-//    }
+        ModelAndView modelAndView = new ModelAndView("tagAddView");
+        modelAndView.addObject("userId", userId);
+        modelAndView.addObject("projectId", projectId);
+        modelAndView.addObject("tags", tags);
+
+        return modelAndView;
+    }
 
     @GetMapping("/{tagId}")
     public Tag getTag(@PathVariable Long tagId){
@@ -42,11 +43,11 @@ public class TagController {
     }
 
     @PostMapping
-    public Tag createTag(@RequestBody CreateTagRequest createTagRequest){
+    public String createTag(@ModelAttribute @RequestBody CreateTagRequest createTagRequest, @PathVariable Long userId, @PathVariable Long projectId){
 
         Project project = null;
-        if(createTagRequest.projectId() != null){
-            project = projectRepository.findById(createTagRequest.projectId())
+        if(projectId != null){
+            project = projectRepository.findById(projectId)
                     .orElse(null);
         }
 
@@ -55,14 +56,16 @@ public class TagController {
                 project
         );
 
-        return tagRepository.save(tag);
+        tagRepository.save(tag);
+
+        return "redirect:/users/" + userId + "/projects/" + project.getProjectId();
     }
 
     @PutMapping("/{tagId}")
-    public void updateTag(@RequestBody UpdateTagRequest updateTagRequest, @PathVariable Long tagId){
+    public void updateTag(@RequestBody UpdateTagRequest updateTagRequest, @PathVariable Long projectId, @PathVariable Long tagId){
         Project project = null;
-        if(updateTagRequest.projectId() != null){
-            project = projectRepository.findById(updateTagRequest.projectId())
+        if(projectId != null){
+            project = projectRepository.findById(projectId)
                     .orElse(null);
         }
 

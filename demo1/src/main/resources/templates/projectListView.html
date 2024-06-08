@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <title>프로젝트 리스트</title>
     <style>
         body {
@@ -16,22 +17,42 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            margin-bottom: 20px;
         }
-
         .header h1 {
             margin: 0;
+        }
+        .header .buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .header .buttons button {
+            padding: 10px 20px;
+            font-size: 14px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+        }
+        .header .buttons button.milestone {
+            background-color: #007bff;
+        }
+        .header .buttons button.tag {
+            background-color: #28a745;
+        }
+        .header .buttons button.project {
+            background-color: #17a2b8;
         }
         .filters {
             display: flex;
             gap: 10px;
-            margin-top: 20px;
-            margin-bottom: 10px;
+            margin-bottom: 20px;
         }
         .filters input, .filters select, .filters button {
             padding: 5px;
         }
         table {
-            width: 90%;
+            width: 100%;
             border-collapse: collapse;
             margin-top: 10px;
         }
@@ -60,35 +81,14 @@
 </head>
 <body>
 <div class="container">
+
     <div class="header">
         <h1>프로젝트 리스트</h1>
-        <button>마일스톤 추가</button>
-        <button>태그 추가</button>
-        <button>업무 추가</button>
+        <div class="buttons">
+            <a th:href="@{'/users/' + ${userId} + '/projects/add'}" class="btn btn-primary login-button">프로젝트 추가</a>
+        </div>
     </div>
-    <div class="filters">
-        <input type="text" placeholder="내용 검색">
-        <select>
-            <option>유형: 전체</option>
-        </select>
-        <select>
-            <option value="ALL" selected>전체</option>
-            <option value="ACTIVE">진행중</option>
-            <option value="DORMANT">대기</option>
-            <option value="ENDED">종료</option>
 
-        </select>
-        <select>
-            <option>담당자: <span th:text="${userId}"></span></option>
-        </select>
-        <select>
-            <option>태그: 전체</option>
-        </select>
-        <select>
-            <option>단계: 전체</option>
-        </select>
-        <button>더 보기</button>
-    </div>
     <table>
         <thead>
         <tr>
@@ -96,26 +96,21 @@
             <th>번호</th>
             <th>제목</th>
             <th>담당자</th>
-            <th>만기일</th>
+<!--            <th>만기일</th>-->
         </tr>
         </thead>
-
         <tbody>
         <tr th:each="project : ${projects}">
             <td><input type="checkbox"></td>
             <td th:text="${project.getProjectId()}"></td>
             <td>
-                <a th:href="@{'http://localhost:8080/users/' + ${userId} + '/projects/' + ${project.getProjectId()}}"
+                <a th:href="@{'/users/' + ${userId} + '/projects/' + ${project.getProjectId()}}"
                    th:text="${project.getProjectName()}"></a>
             </td>
-            <td th:text="${project.getProjectMembers()[0].getMemberPk().getMemberId()}"></td>
-            <td th:text="${project.getEndDateToString()}"></td>
-
-
+            <td th:text="${project.getMembers()[0].getMemberPk().getMemberId()}"></td>
+<!--            <td th:text="${project.getEndDateToString()}"></td>-->
         </tr>
         </tbody>
-
-
     </table>
     <div class="pagination">
         <div>

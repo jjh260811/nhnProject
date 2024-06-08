@@ -6,7 +6,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;
 
 
-public record CreateProjectRequest(@NotNull String projectName,
+public record UpdateProjectRequest(@NotNull String projectName,
                                    @Enumerated(EnumType.STRING)
                                    @NotNull Project.ProjectStatus projectStatus) {
 

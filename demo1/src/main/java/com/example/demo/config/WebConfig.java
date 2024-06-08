@@ -24,7 +24,8 @@ public class WebConfig implements WebMvcConfigurer {
                 .favorParameter(true)
                 .defaultContentType(MediaType.APPLICATION_JSON)
                 .mediaType("json", MediaType.APPLICATION_JSON)
-                .mediaType("xml", MediaType.APPLICATION_XML);
+                .mediaType("xml", MediaType.APPLICATION_XML)
+                .mediaType("html", MediaType.TEXT_HTML);
     }
 
     @Override

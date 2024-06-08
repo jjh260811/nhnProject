@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>단계 추가</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .container {
+            width: 600px;
+            margin: 20px auto;
+            border: 1px solid #ddd;
+            padding: 20px;
+            border-radius: 5px;
+        }
+        .header {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        .milestone-item {
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+        }
+        .milestone-item .status {
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        .milestone-item .title {
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+        .milestone-item .dates {
+            font-size: 14px;
+            color: #666;
+        }
+        .buttons {
+            text-align: right;
+        }
+        .buttons button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+            margin-left: 10px;
+        }
+        .buttons button:nth-child(2) {
+            background-color: #6c757d;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">단계 추가</div>
+    <form id="milestoneForm" method="post" th:action="@{'/users/' + ${userId} + '/projects/' + ${projectId} + '/milestones'}">
+        <div class="input-group">
+            <label for="milestone-name">단계명</label>
+            <input type="text" id="milestone-name" name="milestoneName" placeholder="예) 6월 1주 배포" required>
+        </div>
+
+        <div class="input-group">
+            <label>기간</label>
+            <div class="radio-group">
+                <input type="radio" id="has-period" name="period" value="has" checked>
+                <label for="has-period">있음</label>
+                <input type="radio" id="no-period" name="period" value="none">
+                <label for="no-period">없음</label>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <span>
+                <input type="date" id="start-date" name="milestoneStartDate" value="2024-06-06">
+            </span>
+            <span>
+                <input type="date" id="end-date" name="milestoneEndDate" value="2024-06-12">
+            </span>
+        </div>
+
+        <div class="buttons">
+            <button type="submit" class="btn btn-primary">추가</button>
+            <button type="button" class="btn btn-primary" onclick="history.back();">취소</button>
+        </div>
+    </form>
+
+    <!-- 마일스톤 리스트 출력 -->
+    <div class="milestone-list">
+        <h3>마일스톤 리스트</h3>
+        <div th:each="milestone : ${milestones}" class="milestone-item">
+            <div class="title" th:text="${milestone.milestoneName}"></div>
+            <div class="dates" th:if="${milestone.getMilestoneStartDate()} and ${milestone.getMilestoneEndDate()}" th:text="'기간: ' + ${milestone.getMilestoneStartDate()} + ' - ' + ${milestone.getMilestoneEndDate()}"></div>
+            <div class="dates" th:unless="${milestone.getMilestoneStartDate()} and ${milestone.getMilestoneEndDate()}">기간 없음</div>
+            <div>
+                <a href="#" class="edit-link">편집</a>
+                <a href="#" class="delete-link">삭제</a>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
