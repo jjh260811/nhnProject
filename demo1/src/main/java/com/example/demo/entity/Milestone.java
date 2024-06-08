@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -19,25 +20,27 @@ public class Milestone {
     @NotNull
     private String milestoneName;
 
-    @NotNull
-    private Integer milestoneProgress;
-
+//    @NotNull
+//    private Integer milestoneProgress;
 
     private ZonedDateTime milestoneStartDate;
 
-
     private ZonedDateTime milestoneEndDate;
 
+    @JsonBackReference
     @ManyToOne(optional = false)
     private Project project;
 
-//    @OneToMany(mappedBy = "milestone", cascade = CascadeType.ALL, orphanRemoval = true)
-//    private List<Task> tasks;
-
-
-    public Milestone(String milestoneName, Integer milestoneProgress, Project project) {
+    public Milestone(String milestoneName, ZonedDateTime milestoneStartDate, ZonedDateTime milestoneEndDate,Project project) {
         this.milestoneName = milestoneName;
-        this.milestoneProgress = milestoneProgress;
+        this.milestoneStartDate = milestoneStartDate;
+        this.milestoneEndDate = milestoneEndDate;
         this.project = project;
     }
+
+//    public Milestone(String milestoneName, Integer milestoneProgress, Project project) {
+//        this.milestoneName = milestoneName;
+//        this.milestoneProgress = milestoneProgress;
+//        this.project = project;
+//    }
 }

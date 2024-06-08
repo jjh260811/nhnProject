@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -50,6 +51,7 @@ public class Task {
     @NotNull
     private TaskStatus taskStatus;
 
+    @JsonBackReference
     @ManyToOne
     @NotNull
     private Project project;

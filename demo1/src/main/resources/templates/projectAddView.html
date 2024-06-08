@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>프로젝트 상세</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <title>프로젝트 추가</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -78,30 +79,31 @@
 </head>
 <body>
 <div class="container">
+    <form th:action="@{'/users/' + ${userId} + '/projects'}" method="post">
     <div class="header">
-        <h1>프로젝트-7주차</h1>
-        <button>더 보기</button>
+        <input type="text" style="font-size: 40px" id="projectName" name="projectName" placeholder="프로젝트 제목" required>
     </div>
     <div class="details">
-        <div><span>업무 상태</span><span th:text="${project.getProjectStatus()}"></span></div>
-        <div><span>등록자</span></div>
-        <div><span>담당자</span>광주-6기-교육/student</div>
-        <div><span>참조</span>없음</div>
-        <div><span>태그</span><a class="link-button" href="tag.html"></a></div>
-        <div><span>단계</span><a class="link-button" href="milestoneProperty.html">없음</a></div>
-        <div><span>만기일</span><span th:text="${project.getEndDateToString()}"></span></div>
-    </div>
-    <div class="content">
-        <h2>프로젝트 - 7주차</h2>
-        <p>• 집중개발</p>
-    </div>
-    <div class="editor">
-        <textarea placeholder="내용을 입력하세요..."></textarea>
-        <div class="buttons">
-            <button>저장</button>
-            <button>첨부</button>
+        <div class="status-select">
+            <span>업무 상태</span>
+            <label for="projectStatus"></label>
+            <select id="projectStatus" name="projectStatus">
+                <option th:each="status : ${projectStatuses}"
+                        th:value="${status.name()}"
+                        th:text="${status.name()}"
+                        th:selected="${status.name() == 'ACTIVE'}">
+                </option>
+            </select>
         </div>
+        <div><span>등록자</span><span th:text="${userId}"></span></div>
+        <div><span>멤버</span><span>프로젝트에 등록할 멤버 필요</span></div>
     </div>
+        <!-- 추가 버튼 -->
+        <button type="submit" class="btn btn-primary login-button">추가</button>
+
+        <!-- 취소 버튼 -->
+        <button type="button" class="btn btn-primary login-button" onclick="history.back();">취소</button>
+    </form>
 </div>
 </body>
 </html>
