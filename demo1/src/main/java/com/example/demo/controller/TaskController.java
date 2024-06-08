@@ -24,16 +24,6 @@ public class TaskController {
     private final MilestoneRepository milestoneRepository;
     private final TaskRepository taskRepository;
 
-    @GetMapping("/add")
-    public ModelAndView addTaskView(@PathVariable Long userId, @PathVariable Long projectId) {
-        ModelAndView modelAndView = new ModelAndView("taskAddView");
-        modelAndView.addObject("userId", userId);
-        modelAndView.addObject("projectId", projectId);
-
-
-        return modelAndView;
-    }
-
     @GetMapping
     public List<Task> getTasks(@RequestParam(required = false) Integer page,
                                @RequestParam(required = false) Integer size,

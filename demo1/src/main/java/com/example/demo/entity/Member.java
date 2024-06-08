@@ -37,4 +37,9 @@ public class Member {
 
     @NotNull
     private MemberRole memberRole;
+
+    public Member(MemberPk memberPk, MemberRole memberRole) {
+        this.memberPk = memberPk;
+        this.memberRole = memberRole;
+    }
 }

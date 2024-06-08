@@ -4,9 +4,7 @@ Content-Type: application/json
 
 {
   "projectName": "projectTest",
-  "projectStatus": "ACTIVE",
-  "projectStartDate": "2024-06-07T17:50:16+09:00[Asia/Seoul]",
-  "projectEndDate": "2024-06-09T17:50:16+09:00[Asia/Seoul]"
+  "projectStatus": "ACTIVE"
 }
 
 ### 프로젝트 리스트

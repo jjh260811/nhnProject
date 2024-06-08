@@ -26,7 +26,7 @@ public class CommentController {
                                      @RequestParam(required = false) Integer size,
                                      @RequestParam(required = false) Integer sort,
                                      @PathVariable Long projectId, @PathVariable Long taskId) {
-        return commentRepository.findAll();
+        return commentRepository.findAllByTaskTaskId(taskId);
     }
 
     @GetMapping("/{commentId}")

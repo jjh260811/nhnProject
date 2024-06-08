@@ -1,5 +1,6 @@
 package com.example.demo.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
@@ -16,6 +17,7 @@ public class Comment {
     @NotNull
     private String commentContent;
 
+    @JsonBackReference
     @ManyToOne(optional = false)
     private Task task;
 

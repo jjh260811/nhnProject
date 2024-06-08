@@ -20,9 +20,6 @@ public class Milestone {
     @NotNull
     private String milestoneName;
 
-//    @NotNull
-//    private Integer milestoneProgress;
-
     private ZonedDateTime milestoneStartDate;
 
     private ZonedDateTime milestoneEndDate;
@@ -38,9 +35,4 @@ public class Milestone {
         this.project = project;
     }
 
-//    public Milestone(String milestoneName, Integer milestoneProgress, Project project) {
-//        this.milestoneName = milestoneName;
-//        this.milestoneProgress = milestoneProgress;
-//        this.project = project;
-//    }
 }

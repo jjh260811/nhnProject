@@ -47,13 +47,9 @@ public class Project {
     @Setter
     private ProjectStatus projectStatus;
 
-//    private ZonedDateTime projectStartDate;
-//
-//    private ZonedDateTime projectEndDate;
-
     @JsonManagedReference
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Milestone> milestones= new ArrayList<>();
+    private List<Member> members = new ArrayList<>();
 
     @JsonManagedReference
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -61,11 +57,11 @@ public class Project {
 
     @JsonManagedReference
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Tag> tags = new ArrayList<>();
+    private List<Milestone> milestones= new ArrayList<>();
 
     @JsonManagedReference
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Member> members = new ArrayList<>();
+    private List<Tag> tags = new ArrayList<>();
 
     public Project(String projectName, ProjectStatus projectStatus){
         this.projectName = projectName;
@@ -78,18 +74,13 @@ public class Project {
         this.members = members;
     }
 
-    //    public Project(String projectName, ProjectStatus projectStatus, String projectStartDate, String projectEndDate){
-//        this.projectName = projectName;
-//        this.projectStatus = projectStatus;
-//        this.projectStartDate = ZonedDateTime.parse(projectStartDate, DateTimeFormatter.ISO_ZONED_DATE_TIME);
-//        this.projectEndDate = ZonedDateTime.parse(projectEndDate,DateTimeFormatter.ISO_ZONED_DATE_TIME);
-//    }
+    public Project(String projectName, ProjectStatus projectStatus, List<Task> tasks, List<Member> members, List<Milestone> milestones, List<Tag> tags) {
+        this.projectName = projectName;
+        this.projectStatus = projectStatus;
+        this.tasks = tasks;
+        this.members = members;
+        this.milestones = milestones;
+        this.tags = tags;
+    }
 
-//    public String getStartDateToString(){
-//        return projectStartDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd/ HH:mm"));
-//    }
-//
-//    public String getEndDateToString(){
-//        return projectEndDate.format(DateTimeFormatter.ofPattern("yyyy/MM/dd/ HH:mm"));
-//    }
 }
