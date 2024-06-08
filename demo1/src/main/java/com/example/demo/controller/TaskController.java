@@ -27,6 +27,9 @@ public class TaskController {
     @GetMapping("/add")
     public ModelAndView addTaskView(@PathVariable Long userId, @PathVariable Long projectId) {
         ModelAndView modelAndView = new ModelAndView("taskAddView");
+        modelAndView.addObject("userId", userId);
+        modelAndView.addObject("projectId", projectId);
+
 
         return modelAndView;
     }
