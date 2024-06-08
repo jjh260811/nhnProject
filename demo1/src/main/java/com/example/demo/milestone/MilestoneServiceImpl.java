@@ -1,0 +1,78 @@
+package com.example.demo.milestone;
+
+import com.example.demo.entity.Project;
+import com.example.demo.milestone.entity.Milestone;
+import com.example.demo.milestone.milestonedto.*;
+import com.example.demo.repository.ProjectRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class MilestoneServiceImpl implements MilestoneService {
+    private final MilestoneRepository milestoneRepository;
+    private final ProjectRepository projectRepository;
+
+
+    @Override
+    public List<MilestoneGetDto> getMilestonesByProjectId(Long projectId) {
+        List<MilestoneGetDto> milestones = new ArrayList<>();
+        for(Milestone milestone : milestoneRepository.findAllByProjectProjectId(projectId)){
+            MilestoneGetDto milestoneGetDto = MilestoneGetDto.builder()
+                    .milestoneName(milestone.getMilestoneName())
+                    .milestoneStartDate(milestone.getMilestoneStartDate())
+                    .milestoneEndDate(milestone.getMilestoneEndDate())
+                    .build();
+            milestones.add(milestoneGetDto);
+        }
+        return milestones;
+    }
+
+
+
+    @Override
+    public void createMilestoneById(MilestoneCreateRequestDto createMilestoneRequest, Long projectId){
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid project ID"));
+
+        Milestone milestone = new Milestone(
+                createMilestoneRequest.milestoneName(),
+                createMilestoneRequest.milestoneStartDate(),
+                createMilestoneRequest.milestoneEndDate(),
+                project
+        );
+        milestoneRepository.save(milestone);
+
+    }
+
+    @Override
+    public void changeMilestoneById(MilestoneUpdateRequestDto createMilestoneRequest, Long projectId) {
+        Project project = projectRepository.findById(projectId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid project ID"));
+
+        Milestone milestone = milestoneRepository.findById(createMilestoneRequest.milestoneId()).orElseThrow(() -> new IllegalArgumentException("Invalid milestone ID"));
+        milestone.setMilestoneName(createMilestoneRequest.milestoneName());
+        milestone.setMilestoneStartDate(createMilestoneRequest.milestoneStartDate());
+        milestoneRepository.save(milestone);
+
+
+    }
+
+    @Override
+    public void deleteMilestoneById(MilestoneGetByMilestoneIdRequestDto milestoneRequest) {
+        if(milestoneRepository.existsById(milestoneRequest.milestoneId())) {
+            milestoneRepository.deleteById(milestoneRequest.milestoneId());
+            milestoneRepository.flush();
+        }
+        else{
+            throw new IllegalArgumentException("Invalid milestone ID");
+        }
+    }
+
+
+
+
+}

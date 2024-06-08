@@ -1,12 +1,11 @@
-package com.example.demo.entity;
+package com.example.demo.milestone.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.example.demo.entity.Project;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.time.ZonedDateTime;
-import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -18,10 +17,12 @@ public class Milestone {
     private Long milestoneId;
 
     @NotNull
+    @Setter
     private String milestoneName;
 
+    @Setter
     private ZonedDateTime milestoneStartDate;
-
+    @Setter
     private ZonedDateTime milestoneEndDate;
 
     @ManyToOne(optional = false)

@@ -1,9 +1,7 @@
 package com.example.demo.repository;
 
-import com.example.demo.entity.Milestone;
 import com.example.demo.entity.Project;
 import com.example.demo.entity.Tag;
-import com.example.demo.entity.Task;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;

@@ -1,6 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Milestone;
+import com.example.demo.milestone.entity.Milestone;
 import com.example.demo.entity.Project;
 import com.example.demo.entity.Task;
 

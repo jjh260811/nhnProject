@@ -1,0 +1,32 @@
+###
+GET localhost:8080/projects/1/milestones
+
+
+###
+POST localhost:8080/projects/1/milestones
+Content-Type: application/json
+
+{
+  "milestoneName": "6월1주차",
+  "milestoneStartDate": "2023-06-06T17:50:16+09:00[Asia/Seoul]",
+  "milestoneEndDate": "2023-06-09T17:50:16+09:00[Asia/Seoul]"
+}
+
+###
+PUT localhost:8080/projects/1/milestones
+Content-Type: application/json
+
+{
+  "milestoneId": 5,
+  "milestoneName": "6월2주차",
+  "milestoneStartDate": "2023-06-06T17:50:16+09:00[Asia/Seoul]",
+  "milestoneEndDate": "2023-06-09T17:50:16+09:00[Asia/Seoul]"
+}
+
+###
+DELETE localhost:8080/projects/1/milestones
+Content-Type: application/json
+
+{
+  "milestoneId": 5
+}

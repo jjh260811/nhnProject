@@ -56,11 +56,21 @@
     <div class="header">업무 > 단계</div>
     <div class="sub-header">속성별로 단계를 등록하고, 업무에 적용하면 업무를 쉽게 분류할 수 있습니다.</div>
     <div class="milestone-inputs">
-        <input type="text" placeholder="예) 그룹명:단계명">
-        <button onclick="location.href='milestone_add.html'">추가</button>
+        <button onclick="location.href='milestone_add.html'">추가</button> <!--추가하면 add링크로 이동-->
         <button>취소</button>
     </div>
-    <div class="group">그룹: 없음</div>
+    <div class="group">
+        <h3>마일스톤 리스트</h3>
+        <div th:each="milestone : ${milestones}" class="milestone-item">
+            <div class="title" th:text="${milestone.milestoneName}"></div>
+            <div class="dates" th:if="${milestone.getMilestoneStartDate()} and ${milestone.getMilestoneEndDate()}" th:text="'기간: ' + ${milestone.getMilestoneStartDate()} + ' - ' + ${milestone.getMilestoneEndDate()}"></div>
+            <div class="dates" th:unless="${milestone.getMilestoneStartDate()} and ${milestone.getMilestoneEndDate()}">기간 없음</div>
+            <div>
+                <a href="#" class="edit-link">편집</a>
+                <a href="#" class="delete-link">삭제</a>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

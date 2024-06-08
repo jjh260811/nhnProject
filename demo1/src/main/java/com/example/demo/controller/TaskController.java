@@ -1,9 +1,9 @@
 package com.example.demo.controller;
 
-import com.example.demo.entity.Milestone;
+import com.example.demo.milestone.entity.Milestone;
 import com.example.demo.entity.Project;
 import com.example.demo.entity.Task;
-import com.example.demo.repository.MilestoneRepository;
+import com.example.demo.milestone.MilestoneRepository;
 import com.example.demo.repository.ProjectRepository;
 import com.example.demo.repository.TaskRepository;
 import com.example.demo.request.CreateTaskRequest;
