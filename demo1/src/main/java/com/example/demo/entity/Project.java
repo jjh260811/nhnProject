@@ -48,7 +48,7 @@ public class Project {
     private ProjectStatus projectStatus;
 
 
-    public Project(String projectName, ProjectStatus projectStatus){
+    public Project(String projectName, ProjectStatus projectStatus, ){
         this.projectName = projectName;
         this.projectStatus = projectStatus;
     }

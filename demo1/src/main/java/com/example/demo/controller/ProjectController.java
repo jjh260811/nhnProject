@@ -49,8 +49,22 @@ public class ProjectController {
     public ProjectCreateDto createProject(@RequestBody ProjectCreateDto request) {
         Project project = new Project(
                 request.name(),
-                request.status()
+                request.status(),
+                request.memberIds()
         );
+
+        // Create admin member
+        MemberPk adminMemberPk = new MemberPk(request.adminUserId(), project.getProjectId());
+        Member adminMember = new Member(adminMemberPk, Member.MemberRole.ADMIN);
+        project.addMember(adminMember);
+
+        // Create other members
+        for (Long memberId : request.memberIds()) {
+            MemberPk memberPk = new MemberPk(memberId, project.getProjectId());
+            Member member = new Member(memberPk, Member.MemberRole.MEMBER);
+            project.addMember(member);
+        }
+
 
         projectRepository.save(project);
         projectRepository.flush();
@@ -58,7 +72,7 @@ public class ProjectController {
         ProjectCreateDto response = ProjectCreateDto.builder()
                 .name(project.getProjectName())
                 .status(project.getProjectStatus())
-//                .memberIds(project.getMembers())
+                .memberIds(project.get)
                 .build();
 
          memberRepository.save(new Member(new MemberPk(request.adminUserId(), project.getProjectId()), project, Member.MemberRole.ADMIN));
