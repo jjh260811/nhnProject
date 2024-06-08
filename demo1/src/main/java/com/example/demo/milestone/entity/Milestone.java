@@ -26,6 +26,7 @@ public class Milestone {
     private ZonedDateTime milestoneEndDate;
 
     @ManyToOne(optional = false)
+    @JoinColumn(name = "projectId")
     private Project project;
 
     public Milestone(String milestoneName, ZonedDateTime milestoneStartDate, ZonedDateTime milestoneEndDate,Project project) {
