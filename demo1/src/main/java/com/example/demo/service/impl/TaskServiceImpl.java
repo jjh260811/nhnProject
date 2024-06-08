@@ -1,7 +1,7 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.dto.TaskCreateRequestDto;
-import com.example.demo.dto.TaskCreateResponseDto;
+import com.example.demo.dto.TaskCreateDto;
+import com.example.demo.dto.TaskReadResponseDto;
 import com.example.demo.entity.Milestone;
 import com.example.demo.entity.Project;
 import com.example.demo.entity.Task;
@@ -9,10 +9,12 @@ import com.example.demo.error.ResourceNotFoundException;
 import com.example.demo.repository.MilestoneRepository;
 import com.example.demo.repository.ProjectRepository;
 import com.example.demo.repository.TaskRepository;
+import com.example.demo.request.UpdateTaskRequest;
 import com.example.demo.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,18 +25,30 @@ public class TaskServiceImpl implements TaskService {
     private final ProjectRepository projectRepository;
 
     @Override
-    public List<Task> findAllTask(Long projectId) {
-        return taskRepository.findAllByProjectProjectId(projectId);
+    public List<TaskReadResponseDto> findAllTask(Long projectId) {
+
+        List<TaskReadResponseDto> tasks = new ArrayList<>();
+        for(Task task : taskRepository.findAllByProjectProjectId(projectId)){
+            TaskReadResponseDto taskReadResponseDto = TaskReadResponseDto.builder()
+                    .task(task)
+                    .build();
+            tasks.add(taskReadResponseDto);
+        }
+        return tasks;
     }
 
     @Override
-    public Task getById(Long id) {
-        return taskRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Task(id = " + id + ") not found."));
+    public TaskReadResponseDto getById(Long taskId) {
+        Task task = taskRepository.findById(taskId)
+                .orElseThrow(() -> new ResourceNotFoundException("Task(id = " + taskId + ") not found."));
+
+        return TaskReadResponseDto.builder()
+                .task(task)
+                .build();
     }
 
     @Override
-    public Task create(TaskCreateRequestDto request, Long projectId) {
+    public TaskCreateDto create(TaskCreateDto request, Long projectId) {
         Project project = projectRepository.findById(projectId).orElseThrow(() -> new ResourceNotFoundException("Project(id = " + projectId + ") not found."));
         Milestone milestone = milestoneRepository.findById(request.milestoneId()).orElse(null);
 
@@ -48,47 +62,29 @@ public class TaskServiceImpl implements TaskService {
 
         taskRepository.save(task);
 
-        TaskCreateResponseDto response = TaskCreateRequestDto.builder()
+        return TaskCreateDto.builder()
                 .name(task.getTaskName())
                 .description(task.getTaskDescription())
                 .status(task.getTaskStatus())
-                .projectID
-        return
+                .milestoneId(task.getMilestone().getMilestoneId())
+                .build();
 
     }
 
     @Override
-    public Task create(String name, String description, Task.TaskStatus status, Project project, Milestone milestone) {
-
-//        Project project = projectRepository.findById(projectId)
-//                .orElseThrow(() -> new IllegalArgumentException("Invalid project ID"));
-//
-//        Milestone milestone = null;
-//        if (createTaskRequest.milestoneId() != null) {
-//            milestone = milestoneRepository.findById(createTaskRequest.milestoneId())
-//                    .orElse(null);
-//        }
-//
-//        // Task 객체 생성
-//        Task task = new Task(
-//                createTaskRequest.taskName(),
-//                createTaskRequest.taskDescription(),
-//                Task.TaskStatus.jsonCreator(String.valueOf(createTaskRequest.taskStatus())),
-//                project,
-//                milestone
-//        );
-
-        return taskRepository.save(task);
-        return taskRepository.save(new Task(name, description, status, project, milestone));
-    }
-
-    @Override
-    public Task modifyById(Long taskId, String name, String description, Task.TaskStatus status, Long milestoneId) {
+    public void modifyById(UpdateTaskRequest request, Long taskId) {
         if(!taskRepository.existsById(taskId)){
             throw new IllegalArgumentException("Task id " + taskId + " not exists.");
         }
-        return null;
-//        return taskRepository.updateByTaskId(taskId, name, description, status, milestoneId);
+
+        Milestone milestone = milestoneRepository.findById(request.milestoneId()).orElse(null);
+
+        taskRepository.updateByTaskId(
+                taskId,
+                request.taskName(),
+                request.taskDescription(),
+                request.taskStatus(),
+                milestone);
     }
 
     @Override
