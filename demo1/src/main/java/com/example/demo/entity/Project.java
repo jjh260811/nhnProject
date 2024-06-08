@@ -47,40 +47,11 @@ public class Project {
     @Setter
     private ProjectStatus projectStatus;
 
-    @JsonManagedReference
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Member> members = new ArrayList<>();
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Task> tasks = new ArrayList<>();
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Milestone> milestones= new ArrayList<>();
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "project", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Tag> tags = new ArrayList<>();
 
     public Project(String projectName, ProjectStatus projectStatus){
         this.projectName = projectName;
         this.projectStatus = projectStatus;
     }
 
-    public Project(String projectName, ProjectStatus projectStatus, List<Member> members){
-        this.projectName = projectName;
-        this.projectStatus = projectStatus;
-        this.members = members;
-    }
-
-    public Project(String projectName, ProjectStatus projectStatus, List<Task> tasks, List<Member> members, List<Milestone> milestones, List<Tag> tags) {
-        this.projectName = projectName;
-        this.projectStatus = projectStatus;
-        this.tasks = tasks;
-        this.members = members;
-        this.milestones = milestones;
-        this.tags = tags;
-    }
 
 }

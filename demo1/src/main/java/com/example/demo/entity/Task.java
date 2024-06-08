@@ -54,19 +54,12 @@ public class Task {
     @NotNull
     private TaskStatus taskStatus;
 
-    @JsonBackReference
     @ManyToOne
     @NotNull
     private Project project;
 
     @OneToOne
     private Milestone milestone;
-
-    @JsonManagedReference
-    @OneToMany(mappedBy = "task", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Comment> comments;
-
-
 
 
 }

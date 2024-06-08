@@ -30,7 +30,6 @@ public class Member {
     @EmbeddedId
     private MemberPk memberPk;
 
-    @JsonBackReference
     @ManyToOne(optional = false)
     @MapsId("projectId")
     private Project project;

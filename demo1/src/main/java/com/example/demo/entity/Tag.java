@@ -18,7 +18,6 @@ public class Tag {
     @NotNull
     private String tagName;
 
-    @JsonBackReference
     @ManyToOne
     private Project project;
 

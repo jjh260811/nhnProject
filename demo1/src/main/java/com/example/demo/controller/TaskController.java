@@ -8,11 +8,8 @@ import com.example.demo.repository.ProjectRepository;
 import com.example.demo.repository.TaskRepository;
 import com.example.demo.request.CreateTaskRequest;
 import com.example.demo.request.UpdateTaskRequest;
-import com.example.demo.service.TaskServiceImpl;
-import jakarta.validation.constraints.Null;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
 

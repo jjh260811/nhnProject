@@ -1,11 +1,11 @@
-package com.example.demo.service;
+package com.example.demo.service.impl;
 
 import com.example.demo.entity.Milestone;
 import com.example.demo.entity.Project;
 import com.example.demo.entity.Task;
 import com.example.demo.error.ResourceNotFoundException;
 import com.example.demo.repository.TaskRepository;
-import com.example.demo.service.impl.TaskService;
+import com.example.demo.service.TaskService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

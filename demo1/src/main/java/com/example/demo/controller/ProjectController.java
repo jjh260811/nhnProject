@@ -1,5 +1,8 @@
 package com.example.demo.controller;
 
+import com.example.demo.dto.ProjectCreateDto;
+import com.example.demo.dto.ProjectGetByUserIdRequestDto;
+import com.example.demo.dto.ProjectGetDto;
 import com.example.demo.entity.Member;
 import com.example.demo.entity.MemberPk;
 import com.example.demo.entity.Project;
@@ -18,18 +21,21 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/users/{userId}/projects")
+@RequestMapping("/projects")
 public class ProjectController {
     private final ProjectRepository projectRepository;
     private final MemberRepository memberRepository;
 
     @GetMapping
-    public List<Project> getAllProjects(@PathVariable Long userId) {
-        return projectRepository.findProjectsByUserId(userId);
+    public List<Project> getAllProjects(@RequestParam(required = false) Integer page,
+                                        @RequestParam(required = false) Integer size,
+                                        @RequestParam(required = false) Integer sort,
+                                        @RequestBody ProjectGetByUserIdRequestDto request) {
+        return projectRepository.findProjectsByUserId(request.userId());
     }
 
     @GetMapping("/{projectId}")
-    public Project getProject(@PathVariable Long userId, @PathVariable Long projectId) {
+    public Project getProject(@PathVariable Long projectId) {
         Project project = projectRepository.findById(projectId).orElse(null);
 
         if(project == null){
@@ -40,45 +46,38 @@ public class ProjectController {
     }
 
     @PostMapping
-    public CreateProjectResponse createProject(@RequestBody CreateProjectRequest request, @PathVariable Long userId) {
+    public ProjectCreateDto createProject(@RequestBody ProjectCreateDto request) {
         Project project = new Project(
-                request.projectName(),
-                request.projectStatus(),
-                request.tasks(),
-                request.members(),
-                request.milestones(),
-                request.tags()
+                request.name(),
+                request.status()
         );
 
         projectRepository.save(project);
         projectRepository.flush();
 
-        CreateProjectResponse response = CreateProjectResponse.builder()
-                .projectName(project.getProjectName())
-                .projectStatus(project.getProjectStatus())
-                .tasks(project.getTasks())
-                .members(project.getMembers())
-                .milestones(project.getMilestones())
-                .tags(project.getTags())
+        ProjectCreateDto response = ProjectCreateDto.builder()
+                .name(project.getProjectName())
+                .status(project.getProjectStatus())
+//                .memberIds(project.getMembers())
                 .build();
 
-         memberRepository.save(new Member(new MemberPk(userId, project.getProjectId()), project, Member.MemberRole.ADMIN));
+         memberRepository.save(new Member(new MemberPk(request.adminUserId(), project.getProjectId()), project, Member.MemberRole.ADMIN));
          return response;
     }
 
-    @PutMapping("/{projectId}")
-    public void updateProject(@PathVariable Long projectId, @RequestBody UpdateProjectRequest project) {
-        projectRepository.updateProjectByProjectId(projectId, project.projectName(), project.projectStatus());
-    }
-
-    @DeleteMapping("/{projectId}")
-    public void deleteProject(@PathVariable Long projectId) {
-        Project project = projectRepository.findById(projectId).orElse(null);
-
-        if(project == null){
-            throw new RuntimeException();
-        }
-
-        projectRepository.deleteById(projectId);
-    }
+//    @PutMapping("/{projectId}")
+//    public void updateProject(@PathVariable Long projectId, @RequestBody UpdateProjectRequest project) {
+//        projectRepository.updateProjectByProjectId(projectId, project.projectName(), project.projectStatus());
+//    }
+//
+//    @DeleteMapping("/{projectId}")
+//    public void deleteProject(@PathVariable Long projectId) {
+//        Project project = projectRepository.findById(projectId).orElse(null);
+//
+//        if(project == null){
+//            throw new RuntimeException();
+//        }
+//
+//        projectRepository.deleteById(projectId);
+//    }
 }

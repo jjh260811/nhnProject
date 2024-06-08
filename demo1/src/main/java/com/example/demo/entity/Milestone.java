@@ -24,7 +24,6 @@ public class Milestone {
 
     private ZonedDateTime milestoneEndDate;
 
-    @JsonBackReference
     @ManyToOne(optional = false)
     private Project project;
 

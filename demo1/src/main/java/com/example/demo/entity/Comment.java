@@ -17,7 +17,6 @@ public class Comment {
     @NotNull
     private String commentContent;
 
-    @JsonBackReference
     @ManyToOne(optional = false)
     private Task task;
 

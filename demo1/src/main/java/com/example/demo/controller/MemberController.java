@@ -25,27 +25,27 @@ public class MemberController {
         return memberRepository.findById(memberId).orElse(null);
     }
 
-    @PostMapping
-    public CreateMemberResponse createMember(@PathVariable("projectId") Long projectId, @RequestBody CreateMemberRequest request) {
-        Member member = new Member(
-                request.memberPk(),
-                request.memberRole()
-        );
-
-        memberRepository.save(member);
-        memberRepository.flush();
-
-        CreateMemberResponse response = CreateMemberResponse.builder()
-                .memberPk(member.getMemberPk())
-                .memberRole(member.getMemberRole())
-                .build();
-
-        return response;
-    }
-
-    @DeleteMapping("/{memberId}")
-    public void deleteMember(@PathVariable("projectId") Long projectId, @PathVariable("memberId") Long memberId) {
-        memberRepository.deleteById(memberId);
-    }
+//    @PostMapping
+//    public CreateMemberResponse createMember(@PathVariable("projectId") Long projectId, @RequestBody CreateMemberRequest request) {
+//        Member member = new Member(
+//                request.memberPk(),
+//                request.memberRole()
+//        );
+//
+//        memberRepository.save(member);
+//        memberRepository.flush();
+//
+//        CreateMemberResponse response = CreateMemberResponse.builder()
+//                .memberPk(member.getMemberPk())
+//                .memberRole(member.getMemberRole())
+//                .build();
+//
+//        return response;
+//    }
+//
+//    @DeleteMapping("/{memberId}")
+//    public void deleteMember(@PathVariable("projectId") Long projectId, @PathVariable("memberId") Long memberId) {
+//        memberRepository.deleteById(memberId);
+//    }
 
 }

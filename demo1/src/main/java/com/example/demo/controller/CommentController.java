@@ -7,9 +7,7 @@ import com.example.demo.repository.CommentRepository;
 import com.example.demo.repository.TaskRepository;
 import com.example.demo.request.CreateCommentRequest;
 import com.example.demo.request.UpdateCommentRequest;
-import com.example.demo.service.CommentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
