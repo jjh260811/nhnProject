@@ -32,4 +32,5 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
                         @Param("taskStatus") Task.TaskStatus taskStatus,
                         @Param("milestone") Milestone milestone);
 
+
 }

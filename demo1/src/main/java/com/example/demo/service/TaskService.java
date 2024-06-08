@@ -1,13 +1,16 @@
 package com.example.demo.service;
 
-import com.example.demo.entity.Milestone;
-import com.example.demo.entity.Project;
+import com.example.demo.dto.TaskCreateRequestDto;
 import com.example.demo.entity.Task;
 
-public interface TaskService {
-    Task getById(Long id);
+import java.util.List;
 
-    Task create(String name, String description, Task.TaskStatus status, Project project, Milestone milestone);
+public interface TaskService {
+    List<Task> findAllTask(Long projectId);
+
+    Task getById(Long taskId);
+
+    Task create(TaskCreateRequestDto request, Long projectId);
 
     Task modifyById(Long taskId, String name, String description, Task.TaskStatus status, Long milestoneId);
 

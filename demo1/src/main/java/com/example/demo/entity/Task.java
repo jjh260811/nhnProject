@@ -1,16 +1,13 @@
 package com.example.demo.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import java.util.List;
 
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -41,23 +38,29 @@ public class Task {
         this.milestone = milestone;
     }
 
+    @JsonProperty("taskId")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long taskId;
 
+    @JsonProperty("name")
     @NotNull
     private String taskName;
 
+    @JsonProperty("description")
     private String taskDescription;
 
+    @JsonProperty("status")
     @Enumerated(EnumType.STRING)
     @NotNull
     private TaskStatus taskStatus;
 
+//    @JsonProperty("projectId")
     @ManyToOne
     @NotNull
     private Project project;
 
+//    @JsonProperty("milestoneId")
     @OneToOne
     private Milestone milestone;
 
