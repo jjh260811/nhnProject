@@ -1,9 +1,14 @@
-package com.example.demo.milestone;
+package com.example.demo.service.impl;
 
+import com.example.demo.dto.MilestoneCreateRequestDto;
+import com.example.demo.dto.MilestoneGetByMilestoneIdRequestDto;
+import com.example.demo.dto.MilestoneGetDto;
+import com.example.demo.dto.MilestoneUpdateRequestDto;
 import com.example.demo.entity.Project;
-import com.example.demo.milestone.entity.Milestone;
-import com.example.demo.milestone.milestonedto.*;
+import com.example.demo.entity.Milestone;
+import com.example.demo.repository.MilestoneRepository;
 import com.example.demo.repository.ProjectRepository;
+import com.example.demo.service.MilestoneService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

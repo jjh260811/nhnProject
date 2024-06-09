@@ -1,6 +1,9 @@
-package com.example.demo.milestone;
+package com.example.demo.service;
 
-import com.example.demo.milestone.milestonedto.*;
+import com.example.demo.dto.MilestoneCreateRequestDto;
+import com.example.demo.dto.MilestoneGetByMilestoneIdRequestDto;
+import com.example.demo.dto.MilestoneGetDto;
+import com.example.demo.dto.MilestoneUpdateRequestDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

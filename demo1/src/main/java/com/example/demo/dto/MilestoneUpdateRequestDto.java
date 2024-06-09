@@ -1,4 +1,4 @@
-package com.example.demo.milestone.milestonedto;
+package com.example.demo.dto;
 
 
 import lombok.Builder;

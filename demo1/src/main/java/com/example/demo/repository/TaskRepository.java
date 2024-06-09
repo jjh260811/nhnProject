@@ -1,6 +1,6 @@
 package com.example.demo.repository;
 
-import com.example.demo.milestone.entity.Milestone;
+import com.example.demo.entity.Milestone;
 import com.example.demo.entity.Task;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;

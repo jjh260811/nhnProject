@@ -1,8 +1,8 @@
-###
+###해당 프로젝트에 있는 모든 마일스톤 반환
 GET localhost:8080/projects/1/milestones
 
 
-###
+###해당 프로젝트에 마일스톤 추가
 POST localhost:8080/projects/1/milestones
 Content-Type: application/json
 
@@ -12,7 +12,7 @@ Content-Type: application/json
   "milestoneEndDate": "2023-06-09T17:50:16+09:00[Asia/Seoul]"
 }
 
-###
+###해당 프로젝트에 있는 마일스톤 수정
 PUT localhost:8080/projects/1/milestones
 Content-Type: application/json
 
@@ -23,7 +23,7 @@ Content-Type: application/json
   "milestoneEndDate": "2023-06-09T17:50:16+09:00[Asia/Seoul]"
 }
 
-###
+###해당 프로젝트에 있는 마일스톤 삭제
 DELETE localhost:8080/projects/1/milestones
 Content-Type: application/json
 

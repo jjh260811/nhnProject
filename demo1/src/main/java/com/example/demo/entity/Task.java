@@ -1,6 +1,5 @@
 package com.example.demo.entity;
 
-import com.example.demo.milestone.entity.Milestone;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;

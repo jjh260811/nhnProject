@@ -1,7 +1,7 @@
 package com.example.demo.request;
 
 import com.example.demo.entity.*;
-import com.example.demo.milestone.entity.Milestone;
+import com.example.demo.entity.Milestone;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.NotNull;

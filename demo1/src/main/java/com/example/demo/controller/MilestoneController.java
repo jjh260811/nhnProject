@@ -1,7 +1,11 @@
-package com.example.demo.milestone;
+package com.example.demo.controller;
 
 
-import com.example.demo.milestone.milestonedto.*;
+import com.example.demo.dto.MilestoneCreateRequestDto;
+import com.example.demo.dto.MilestoneGetByMilestoneIdRequestDto;
+import com.example.demo.dto.MilestoneGetDto;
+import com.example.demo.dto.MilestoneUpdateRequestDto;
+import com.example.demo.service.MilestoneService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

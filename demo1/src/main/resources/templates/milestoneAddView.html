@@ -8,17 +8,21 @@
         body {
             font-family: Arial, sans-serif;
         }
+
         .container {
             width: 600px;
             margin: 20px auto;
             border: 1px solid #ddd;
             padding: 20px;
             border-radius: 5px;
+            position: relative;
         }
+
         .header {
             font-size: 18px;
             margin-bottom: 20px;
         }
+
         .milestone-item {
             margin-bottom: 20px;
             padding: 10px;
@@ -26,21 +30,26 @@
             border-radius: 5px;
             background-color: #f9f9f9;
         }
+
         .milestone-item .status {
             font-weight: bold;
             margin-bottom: 5px;
         }
+
         .milestone-item .title {
             font-size: 16px;
             margin-bottom: 5px;
         }
+
         .milestone-item .dates {
             font-size: 14px;
             color: #666;
         }
+
         .buttons {
             text-align: right;
         }
+
         .buttons button {
             padding: 8px 16px;
             border: none;
@@ -50,13 +59,22 @@
             cursor: pointer;
             margin-left: 10px;
         }
-        .buttons button:nth-child(2) {
-            background-color: #6c757d;
+
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: transparent;
+            border: none;
+            color: #333;
+            font-size: 24px;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 <div class="container">
+    <button type="button" class="close-button" onclick="history.back();">&times;</button>
     <div class="header">단계 추가</div>
     <form id="milestoneForm" method="post" th:action="@{'/projects/' + ${projectId} + '/milestones'}">
         <div class="input-group">
@@ -74,7 +92,7 @@
             </div>
         </div>
 
-        <div class="input-group">
+        <div class="input-group" id="date-input-group">
             <span>
                 <input type="datetime-local" id="start-date" name="milestoneStartDate" value="2024-06-06T10:30:00">
             </span>
@@ -85,14 +103,24 @@
 
         <div class="buttons">
             <button type="submit" class="btn btn-primary">추가</button>
-            <button type="button" class="btn btn-primary" onclick="history.back();">취소</button>
         </div>
     </form>
 
-    <!-- 마일스톤 리스트 출력 -->
-    <div class="milestone-list">
 
-    </div>
+    <script>
+        const hasDateRadio = document.getElementById('has-period');
+        const noDateRadio = document.getElementById('no-period');
+        const dateInputGroup = document.getElementById('date-input-group');
+
+        hasDateRadio.addEventListener('change', () => {
+            dateInputGroup.style.display = 'block';
+        });
+
+        noDateRadio.addEventListener('change', () => {
+            dateInputGroup.style.display = 'none';
+        });
+    </script>
+
 </div>
 </body>
 </html>

@@ -1,6 +1,5 @@
-package com.example.demo.milestone.entity;
+package com.example.demo.entity;
 
-import com.example.demo.entity.Project;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;

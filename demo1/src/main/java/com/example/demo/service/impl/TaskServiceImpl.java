@@ -1,6 +1,6 @@
 package com.example.demo.service.impl;
 
-import com.example.demo.milestone.entity.Milestone;
+import com.example.demo.entity.Milestone;
 import com.example.demo.entity.Project;
 import com.example.demo.entity.Task;
 import com.example.demo.error.ResourceNotFoundException;

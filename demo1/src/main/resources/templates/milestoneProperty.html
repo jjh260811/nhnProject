@@ -14,6 +14,7 @@
             border: 1px solid #ddd;
             padding: 20px;
             border-radius: 5px;
+            position: relative;
         }
         .header {
             font-size: 18px;
@@ -49,11 +50,22 @@
         .group {
             margin-top: 20px;
         }
+        .close-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: transparent;
+            border: none;
+            color: #333;
+            font-size: 24px;
+            cursor: pointer;
+        }
     </style>
 </head>
 <body>
 <div class="container">
-    <div class="header">업무 > 단계</div>
+    <button type="button" class="close-button" onclick="history.back();">&times;</button>
+    <div class="header">업무 &gt; 단계</div>
     <div class="sub-header">속성별로 단계를 등록하고, 업무에 적용하면 업무를 쉽게 분류할 수 있습니다.</div>
     <div class="milestone-inputs">
         <button onclick="location.href='milestone_add.html'">추가</button> <!--추가하면 add링크로 이동-->
